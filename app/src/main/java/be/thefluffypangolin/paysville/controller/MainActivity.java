@@ -1,8 +1,10 @@
-package be.thefluffypangolin.paysville;
+package be.thefluffypangolin.paysville.controller;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import be.thefluffypangolin.paysville.R;
 
 public class MainActivity extends AppCompatActivity {
 
