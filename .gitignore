@@ -59,3 +59,7 @@ fastlane/Preview.html
 fastlane/screenshots
 fastlane/test_output
 fastlane/readme.md
+
+# Example test
+app/src/androidTest/java/be/thefluffypangolin/paysville/ExampleInstrumentedTest.java
+app/src/test/java/be/thefluffypangolin/paysville/ExampleUnitTest.java
