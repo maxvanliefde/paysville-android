@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">Pays-Ville</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home_bottom">Jouer</string>
+    <string name="title_home">Jouer au Pays-Ville</string>
+    <string name="title_settings_bottom">Paramètres</string>
+    <string name="title_settings">Paramètres du jeu</string>
+    <string name="title_about_bottom">À propos</string>
+    <string name="title_about">À propos de cette application</string>
 </resources>
