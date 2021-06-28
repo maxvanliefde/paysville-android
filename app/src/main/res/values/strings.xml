@@ -7,4 +7,5 @@
     <string name="title_settings">Paramètres du jeu</string>
     <string name="title_about_bottom">À propos</string>
     <string name="title_about">À propos de cette application</string>
+    <string name="launch_game_text">Lancer le jeu</string>
 </resources>
