@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        app:key="end_game_category"
+        app:title="Fin de la partie">
+
+        <ListPreference
+            app:key="end_game_list"
+            app:title="Mode de fin de partie"
+            app:entryValues="@array/values_end_game"
+            app:entries="@array/entries_end_game"
+            app:useSimpleSummaryProvider="true"
+            app:defaultValue="all_letters"
+            />
+
+        <EditTextPreference
+            app:key="end_game_points"
+            app:title="Nombre de points pour gagner"
+            app:summary="Non disponible"
+            app:enabled="false"
+            />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:key="end_round_category"
+        app:title="Fin de la manche">
+
+        <SwitchPreferenceCompat
+            app:key="timer_switch"
+            app:title="Activer le compte à rebours"
+            app:defaultValue="false"
+            />
+
+        <EditTextPreference
+            app:key="timer_duration"
+            app:title="Durée d'une manche en secondes"
+            app:dependency="timer_switch"
+            />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:key="dl_category"
+        app:title="Lettres difficiles"
+        app:isPreferenceVisible="false">
+
+        <SwitchPreferenceCompat
+            app:key="dl_switch"
+            app:title="Faciliter les lettres difficiles"
+            app:summary="Ajouter du temps au compte à rebours"
+            app:defaultValue="false"
+            />
+
+        <MultiSelectListPreference
+            app:key="dl_list"
+            app:title="Lettres difficiles"
+            app:entryValues="@array/all_letters"
+            app:entries="@array/all_letters"
+            app:dependency="dl_switch"
+            />
+
+        <EditTextPreference
+            app:key="dl_time"
+            app:title="Secondes supplémentaires"
+            app:dependency="dl_switch"
+            />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:key="rd_category"
+        app:title="Lettre compte double">
+
+        <SwitchPreferenceCompat
+            app:key="rd_switch"
+            app:title="Ajouter de l'aléatoire"
+            app:summary="Doubler aléatoirement les points d'une manche"/>
+
+        <SeekBarPreference
+            app:key="rd_probability"
+            app:title="Réglez la probabilité"
+            app:dependency="rd_switch"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:key="sound_category"
+        app:title="Son">
+
+        <SwitchPreferenceCompat
+            app:key="sound_switch"
+            app:title="Activer les sons"
+            app:summary="Fin de manche, fin de partie, lettre compte double, etc."/>
+    </PreferenceCategory>
+
+</PreferenceScreen>
