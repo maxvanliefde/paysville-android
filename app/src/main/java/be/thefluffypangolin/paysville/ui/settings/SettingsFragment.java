@@ -2,20 +2,8 @@ package be.thefluffypangolin.paysville.ui.settings;
 
 import android.os.Bundle;
 import android.text.InputType;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.EditTextPreference;
-import androidx.preference.EditTextPreferenceDialogFragmentCompat;
 import androidx.preference.ListPreference;
 import androidx.preference.MultiSelectListPreference;
 import androidx.preference.Preference;
@@ -24,23 +12,38 @@ import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SeekBarPreference;
 import androidx.preference.SwitchPreferenceCompat;
 
-import org.jetbrains.annotations.NotNull;
-
 import be.thefluffypangolin.paysville.R;
-import be.thefluffypangolin.paysville.databinding.FragmentSettingsBinding;
 
 /**
  * Gère la page des paramètres de jeu
  */
 public class SettingsFragment extends PreferenceFragmentCompat {
 
+    // Fin de partie
+    ListPreference endGameList;
+    EditTextPreference endGamePoints;
+
+    // Fin de manche
+    SwitchPreferenceCompat timerSwitch;
+    EditTextPreference timerDuration;
+
+    // Lettres difficiles
+    PreferenceCategory difficultLettersCategory;
+    SwitchPreferenceCompat difficultLettersSwitch;
+    MultiSelectListPreference difficultLettersList;
+    EditTextPreference difficultLettersTime;
+
+    // Lettre compte double
+    SwitchPreferenceCompat randomDoubleSwitch;
+    SeekBarPreference randomDoubleProbability;
+
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.settings_page, rootKey);
 
         /* Fin de partie */
-        ListPreference endGameList = findPreference("end_game_list");
-        EditTextPreference endGamePoints = findPreference("end_game_points");
+        endGameList = findPreference("end_game_list");
+        endGamePoints = findPreference("end_game_points");
 
         if (endGamePoints != null && endGameList != null) {
             // n'entrer que des nombres dans endGamePoints
@@ -64,8 +67,8 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         }
 
         /* Fin de manche */
-        SwitchPreferenceCompat timerSwitch = findPreference("timer_switch");
-        EditTextPreference timerDuration = findPreference("timer_duration");
+        timerSwitch = findPreference("timer_switch");
+        timerDuration = findPreference("timer_duration");
 
         if (timerDuration != null && timerSwitch != null) {
             // n'entrer que des nombres
@@ -81,10 +84,10 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         }
 
         /* Lettres difficiles */
-        PreferenceCategory difficultLettersCategory = findPreference("dl_category");
-        SwitchPreferenceCompat difficultLettersSwitch = findPreference("dl_switch");
-        MultiSelectListPreference difficultLettersList = findPreference("dl_list");
-        EditTextPreference difficultLettersTime = findPreference("dl_time");
+        difficultLettersCategory = findPreference("dl_category");
+        difficultLettersSwitch = findPreference("dl_switch");
+        difficultLettersList = findPreference("dl_list");
+        difficultLettersTime = findPreference("dl_time");
 
         if (timerSwitch != null && difficultLettersCategory != null) {
             // masquer ou non la section lettres difficiles
@@ -124,8 +127,8 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         }
 
         /* Lettre compte double */
-        SwitchPreferenceCompat randomDoubleSwitch = findPreference("rd_switch");
-        SeekBarPreference randomDoubleProbability = findPreference("rd_probability");
+        randomDoubleSwitch = findPreference("rd_switch");
+        randomDoubleProbability = findPreference("rd_probability");
 
         if (randomDoubleSwitch != null && randomDoubleProbability != null) {
             // seekbar
@@ -135,34 +138,33 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             randomDoubleProbability.setUpdatesContinuously(true);
 
             // summary
-            randomDoubleProbability.setSummary
-                    (randomDoubleProbability.getValue() + " chances sur " + randomDoubleProbability.getMax());
+            if (!randomDoubleSwitch.isChecked())
+                randomDoubleProbability.setSummary(null);
+            else
+                setProbabilitySummary(randomDoubleProbability.getValue());
 
             randomDoubleProbability.setOnPreferenceChangeListener((preference, newValue) -> {
-                if (!randomDoubleSwitch.isChecked()) {
-                    randomDoubleProbability.setSummary(null);
-                    return true;
-                }
-                else if (((Integer)newValue) == randomDoubleProbability.getMin()) {
-                    randomDoubleProbability.setSummary("0% est trop peu, désactivez plutôt l'option !");
-                    return false;
-                }
-                else if (((Integer)newValue) == randomDoubleProbability.getMax()) {
-                    randomDoubleProbability.setSummary("Trop élevé, la probabilité serait de 100% !");
-                    return false;
-                }
-                else {
-                    int value = ((Integer) newValue);
-                    randomDoubleProbability.setSummary(value + " % de chances");
-                    return true;
-                }
+                setProbabilitySummary((Integer) newValue);
+                return true;
             });
 
             randomDoubleSwitch.setOnPreferenceChangeListener((preference, newValue) -> {
                 if (!((Boolean) newValue)) randomDoubleProbability.setSummary(null);
-                else randomDoubleProbability.setValue(randomDoubleProbability.getValue());
+                else setProbabilitySummary(randomDoubleProbability.getValue());
                 return true;
             });
+        }
+    }
+
+    private void setProbabilitySummary(int newValue) {
+        if (newValue == randomDoubleProbability.getMin()) {
+            randomDoubleProbability.setSummary("0% est trop peu, désactivez plutôt l'option !");
+        }
+        else if (newValue == randomDoubleProbability.getMax()) {
+            randomDoubleProbability.setSummary("Trop élevé, la probabilité serait de 100% !");
+        }
+        else {
+            randomDoubleProbability.setSummary(newValue + " % de chances");
         }
     }
 }
