@@ -7,6 +7,8 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Set;
+
 /**
  * La classe GameParameters gère les paramètres d'une partie de Pays-Ville.
  * Les paramètres sont : <br>
@@ -31,6 +33,7 @@ public class GameParameters {
     private int timerDuration;
 
     private boolean bonusTimerOn;
+    private Set<String> bonusTimerLetters;
     private int bonusTimerDuration;
 
     private boolean randomDoublePointsOn;
@@ -122,6 +125,7 @@ public class GameParameters {
             timerDuration = Integer.parseInt(sharedPreferences.getString("timer_duration", "0"));
 
             bonusTimerOn = sharedPreferences.getBoolean("dl_switch", false);
+            bonusTimerLetters = sharedPreferences.getStringSet("dl_list", null);
             if (bonusTimerOn)
                 bonusTimerDuration = Integer.parseInt(sharedPreferences.getString("dl_time", "0"));
         }
@@ -140,6 +144,7 @@ public class GameParameters {
                 ", timerOn=" + timerOn +
                 ", timerDuration=" + timerDuration +
                 ", bonusTimerOn=" + bonusTimerOn +
+                ", bonusTimerLetters=" + bonusTimerLetters +
                 ", bonusTimerDuration=" + bonusTimerDuration +
                 ", randomDoublePointsOn=" + randomDoublePointsOn +
                 ", probabilityRandom=" + probabilityRandom +
