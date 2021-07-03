@@ -128,7 +128,7 @@ public class GameParameters {
 
         randomDoublePointsOn = sharedPreferences.getBoolean("rd_switch", false);
         if (randomDoublePointsOn)
-            probabilityRandom = sharedPreferences.getInt("rd_probability", 20) / 20;
+            probabilityRandom = sharedPreferences.getInt("rd_probability", 1);
     }
 
     @NotNull
