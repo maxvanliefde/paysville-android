@@ -56,7 +56,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
             // listener & check pour afficher le nombre de points uniquement si nécessaire
             endGameList.setOnPreferenceChangeListener((preference, newValue) -> {
-                endGamePoints.setEnabled(((String) newValue).equals("fixed_points"));
+                endGamePoints.setEnabled(newValue.equals("fixed_points"));
                 return true;
             });
             if (endGameList.getValue().equals("fixed_points"))
@@ -129,7 +129,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
         if (randomDoubleSwitch != null && randomDoubleProbability != null) {
             // seekbar
-            randomDoubleProbability.setMax(20);
+            randomDoubleProbability.setMax(100);
             randomDoubleProbability.setMin(0);
             randomDoubleProbability.setSeekBarIncrement(1);
             randomDoubleProbability.setUpdatesContinuously(true);
@@ -153,8 +153,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 }
                 else {
                     int value = ((Integer) newValue);
-                    int max = randomDoubleProbability.getMax();
-                    randomDoubleProbability.setSummary(value + " chances sur " + max);
+                    randomDoubleProbability.setSummary(value + " % de chances");
                     return true;
                 }
             });
