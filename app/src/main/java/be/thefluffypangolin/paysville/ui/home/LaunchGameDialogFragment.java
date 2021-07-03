@@ -51,7 +51,7 @@ public class LaunchGameDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setTitle("Avant de démarrer...")
-                .setMessage("Voici les paramètres du jeu, il est encore temps de les modifier si vous les souhaitez!\n\n"
+                .setMessage("Voici les paramètres du jeu, il est encore temps de les modifier si vous le souhaitez !\n\n"
                         + getGameParameters().toString())
                 .setPositiveButton("Démarrer la partie",
                         (dialog, which) -> listener.onDialogLaunchClick(LaunchGameDialogFragment.this))
