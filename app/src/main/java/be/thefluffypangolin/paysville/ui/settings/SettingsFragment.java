@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.InputType;
 
 import androidx.preference.EditTextPreference;
+import androidx.preference.EditTextPreferenceDialogFragmentCompat;
 import androidx.preference.ListPreference;
 import androidx.preference.MultiSelectListPreference;
 import androidx.preference.Preference;
@@ -46,8 +47,11 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         endGamePoints = findPreference("end_game_points");
 
         if (endGamePoints != null && endGameList != null) {
-            // n'entrer que des nombres dans endGamePoints
-            endGamePoints.setOnBindEditTextListener(editText -> editText.setInputType(InputType.TYPE_CLASS_NUMBER));
+            // n'entrer que des nombres dans endGamePoints et placer le curseur à la fin
+            endGamePoints.setOnBindEditTextListener(editText -> {
+                editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                editText.post(() -> editText.setSelection(editText.getText().length()));
+            });
 
             // summary du nombre de points
             endGamePoints.setSummaryProvider((Preference.SummaryProvider<EditTextPreference>) preference -> {
@@ -71,8 +75,11 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         timerDuration = findPreference("timer_duration");
 
         if (timerDuration != null && timerSwitch != null) {
-            // n'entrer que des nombres
-            timerDuration.setOnBindEditTextListener(editText -> editText.setInputType(InputType.TYPE_CLASS_NUMBER));
+            // n'entrer que des nombres et placer le curseur à la fin
+            timerDuration.setOnBindEditTextListener(editText -> {
+                editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                editText.post(() -> editText.setSelection(editText.getText().length()));
+            });
 
             // summary du nombre de secondes
             timerDuration.setSummaryProvider((Preference.SummaryProvider<EditTextPreference>) preference -> {
@@ -114,8 +121,11 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         }
 
         if (difficultLettersSwitch != null && difficultLettersTime != null) {
-            // n'entrer que des nombres
-            difficultLettersTime.setOnBindEditTextListener(editText -> editText.setInputType(InputType.TYPE_CLASS_NUMBER));
+            // n'entrer que des nombres et placer le curseur à la fin
+            difficultLettersTime.setOnBindEditTextListener(editText -> {
+                editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                editText.post(() -> editText.setSelection(editText.getText().length()));
+            });
 
             // summary
             difficultLettersTime.setSummaryProvider((Preference.SummaryProvider<EditTextPreference>) preference -> {
