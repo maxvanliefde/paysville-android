@@ -13,9 +13,14 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.preference.PreferenceManager;
+
+import java.util.Set;
 
 import be.thefluffypangolin.paysville.databinding.ActivityMainBinding;
+import be.thefluffypangolin.paysville.model.GameParameters;
 import be.thefluffypangolin.paysville.ui.home.LaunchGameDialogFragment;
+import be.thefluffypangolin.paysville.ui.settings.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity implements LaunchGameDialogFragment.LaunchGameDialogListener {
 
@@ -53,4 +58,24 @@ public class MainActivity extends AppCompatActivity implements LaunchGameDialogF
         binding.navView.setSelectedItemId(R.id.navigation_settings);
     }
 
+    @Override
+    public void onGameNotReadyException(DialogFragment dialog, GameParameters.GameNotReadyException e) {
+        // redirige vers l'écran Paramètres car un ou plusieurs paramètres sont incorrects
+        dialog.dismiss();
+        Set<String> reasons = e.getReasons();
+        if (reasons == null) {
+            Snackbar.make(binding.container, "Vérifiez les paramètres de jeu", BaseTransientBottomBar.LENGTH_LONG).show();
+        } else {
+            StringBuilder message = new StringBuilder("Vérifiez les paramètres de jeu : ");
+            for (String reason : reasons) {
+                message.append(reason).append(", ");
+            }
+            Snackbar.make(binding.container,
+                        message.delete(message.length()-2, message.length()-1).toString(),
+                        BaseTransientBottomBar.LENGTH_LONG)
+                    .show();
+        }
+
+        binding.navView.setSelectedItemId(R.id.navigation_settings);
+    }
 }

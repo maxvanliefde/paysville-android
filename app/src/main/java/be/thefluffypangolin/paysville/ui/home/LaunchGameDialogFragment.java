@@ -28,6 +28,7 @@ public class LaunchGameDialogFragment extends DialogFragment {
     public interface LaunchGameDialogListener {
         void onDialogLaunchClick(DialogFragment dialog);
         void onDialogModifyClick(DialogFragment dialog);
+        void onGameNotReadyException(DialogFragment dialog, GameParameters.GameNotReadyException e);
     }
 
     // listener pour les actions
@@ -50,17 +51,22 @@ public class LaunchGameDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setTitle("Avant de démarrer...")
-                .setMessage("Voici les paramètres du jeu, il est encore temps de les modifier si vous le souhaitez !\n\n"
-                        + getGameParameters().toString())
-                .setPositiveButton("Démarrer la partie",
-                        (dialog, which) -> listener.onDialogLaunchClick(LaunchGameDialogFragment.this))
-                .setNegativeButton("Modifier les paramètres",
-                        (dialog, which) -> listener.onDialogModifyClick(LaunchGameDialogFragment.this));
+        try {
+            builder.setTitle("Avant de démarrer...")
+                    .setMessage("Voici les paramètres du jeu, il est encore temps de les modifier si vous le souhaitez !\n\n"
+                            + getGameParameters().toString())
+                    .setPositiveButton("Démarrer la partie",
+                            (dialog, which) -> listener.onDialogLaunchClick(LaunchGameDialogFragment.this))
+                    .setNegativeButton("Modifier les paramètres",
+                            (dialog, which) -> listener.onDialogModifyClick(LaunchGameDialogFragment.this));
+        } catch (GameParameters.GameNotReadyException e) {
+            // un ou plusieurs paramètres incorrects
+            listener.onGameNotReadyException(LaunchGameDialogFragment.this, e);
+        }
         return builder.create();
     }
 
-    private GameParameters getGameParameters() {
+    private GameParameters getGameParameters() throws GameParameters.GameNotReadyException {
         return new GameParameters(PreferenceManager.getDefaultSharedPreferences(requireContext()));
     }
 }

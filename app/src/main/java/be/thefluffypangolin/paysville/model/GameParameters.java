@@ -7,6 +7,7 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -23,6 +24,17 @@ public class GameParameters {
     public static class BadParameterException extends Exception {
         public BadParameterException(String param) {
             super("Le paramètre suivant n'est pas sur true :" + param);
+        }
+    }
+
+    public static class GameNotReadyException extends Exception {
+        private Set<String> reasons;
+        public GameNotReadyException(Set<String> reasons) {
+            super();
+            this.reasons = reasons;
+        }
+        public Set<String> getReasons() {
+            return reasons;
         }
     }
 
@@ -112,27 +124,64 @@ public class GameParameters {
     }
 
     /**
-     * Retourne une instance de GameParameters paramétrée
+     * Crée une instance de GameParameters paramétrée
      * au moyen du SharedPreferences donné.
      */
-    public GameParameters(SharedPreferences sharedPreferences) {
+    public GameParameters(SharedPreferences sharedPreferences) throws GameNotReadyException {
+        Set<String> reasons = new HashSet<>();
+
         gameEndsWithPoints = sharedPreferences.getString("end_game_list", "").equals("fixed_points");
-        if (gameEndsWithPoints)
-            pointsGameEnd = Integer.parseInt(sharedPreferences.getString("end_game_points", "0"));
+        if (gameEndsWithPoints) {
+            try {
+                pointsGameEnd = Integer.parseInt(sharedPreferences.getString("end_game_points", "0"));
+            } catch (NumberFormatException e) {
+                reasons.add("aucun nombre de points n'a été réglé pour finir la partie");
+            }
+        } else {
+            pointsGameEnd = -1;
+        }
 
         timerOn = sharedPreferences.getBoolean("timer_switch", false);
         if (timerOn) {
-            timerDuration = Integer.parseInt(sharedPreferences.getString("timer_duration", "0"));
+            try {
+                timerDuration = Integer.parseInt(sharedPreferences.getString("timer_duration", "0"));
+            } catch (NumberFormatException e) {
+                reasons.add("aucune durée n'a été indiquée pour le compte à rebours");
+            }
 
             bonusTimerOn = sharedPreferences.getBoolean("dl_switch", false);
-            bonusTimerLetters = sharedPreferences.getStringSet("dl_list", null);
-            if (bonusTimerOn)
-                bonusTimerDuration = Integer.parseInt(sharedPreferences.getString("dl_time", "0"));
+            if (bonusTimerOn) {
+                bonusTimerLetters = sharedPreferences.getStringSet("dl_list", null);
+                if (bonusTimerLetters == null || bonusTimerLetters.isEmpty())
+                    reasons.add("aucune lettre difficile n'a été indiquée");
+                try {
+                    bonusTimerDuration = Integer.parseInt(sharedPreferences.getString("dl_time", "0"));
+                } catch (NumberFormatException e) {
+                    reasons.add("aucune durée n'a été indiquée pour le compte à rebours bonus");
+                }
+            } else {
+                bonusTimerLetters = null;
+                bonusTimerDuration = -1;
+            }
+        } else {
+            timerDuration = -1;
+            bonusTimerOn = false;
+            bonusTimerLetters = null;
+            bonusTimerDuration = -1;
         }
 
         randomDoublePointsOn = sharedPreferences.getBoolean("rd_switch", false);
-        if (randomDoublePointsOn)
+        if (randomDoublePointsOn) {
             probabilityRandom = sharedPreferences.getInt("rd_probability", 1);
+            if (probabilityRandom == 0)
+                reasons.add("la probabilité indiquée est de 0%");
+            if (probabilityRandom == 100)
+                reasons.add("la probabilité indiquée est de 100%");
+        } else {
+            probabilityRandom = -1;
+        }
+
+        if (!reasons.isEmpty()) throw new GameNotReadyException(reasons);
     }
 
     @NotNull
