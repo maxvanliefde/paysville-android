@@ -75,7 +75,6 @@ public class MainActivity extends AppCompatActivity implements LaunchGameDialogF
                         BaseTransientBottomBar.LENGTH_LONG)
                     .show();
         }
-
         binding.navView.setSelectedItemId(R.id.navigation_settings);
     }
 }

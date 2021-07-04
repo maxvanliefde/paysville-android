@@ -2,9 +2,6 @@ package be.thefluffypangolin.paysville.model;
 
 import android.content.SharedPreferences;
 
-import androidx.preference.Preference;
-import androidx.preference.PreferenceFragmentCompat;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
@@ -49,7 +46,9 @@ public class GameParameters {
     private int bonusTimerDuration;
 
     private boolean randomDoublePointsOn;
-    private int probabilityRandom;
+    private int probabilityPercentage;
+
+    private boolean isSoundOn;
 
 
     public boolean doGameEndsWithPoints() {
@@ -105,6 +104,14 @@ public class GameParameters {
         this.bonusTimerDuration = bonusTimerDuration;
     }
 
+    public Set<String> getBonusTimerLetters() {
+        return bonusTimerLetters;
+    }
+
+    public void setBonusTimerLetters(Set<String> bonusTimerLetters) {
+        this.bonusTimerLetters = bonusTimerLetters;
+    }
+
 
     public boolean isRandomDoublePointsOn() {
         return randomDoublePointsOn;
@@ -114,13 +121,22 @@ public class GameParameters {
         this.randomDoublePointsOn = randomDoublePointsOn;
     }
 
-    public int getProbabilityRandom() {
-        return probabilityRandom;
+    public int getProbabilityPercentage() {
+        return probabilityPercentage;
     }
 
-    public void setProbabilityRandom(int probabilityRandom) throws BadParameterException {
+    public void setProbabilityPercentage(int probabilityPercentage) throws BadParameterException {
         if (!isRandomDoublePointsOn()) throw new BadParameterException("timerOn");
-        this.probabilityRandom = probabilityRandom;
+        this.probabilityPercentage = probabilityPercentage;
+    }
+
+
+    public boolean isSoundOn() {
+        return isSoundOn;
+    }
+
+    public void setSoundOn(boolean soundOn) {
+        isSoundOn = soundOn;
     }
 
     /**
@@ -133,7 +149,7 @@ public class GameParameters {
         gameEndsWithPoints = sharedPreferences.getString("end_game_list", "").equals("fixed_points");
         if (gameEndsWithPoints) {
             try {
-                pointsGameEnd = Integer.parseInt(sharedPreferences.getString("end_game_points", "0"));
+                pointsGameEnd = Integer.parseInt(sharedPreferences.getString("end_game_points", ""));
             } catch (NumberFormatException e) {
                 reasons.add("aucun nombre de points n'a été réglé pour finir la partie");
             }
@@ -144,7 +160,7 @@ public class GameParameters {
         timerOn = sharedPreferences.getBoolean("timer_switch", false);
         if (timerOn) {
             try {
-                timerDuration = Integer.parseInt(sharedPreferences.getString("timer_duration", "0"));
+                timerDuration = Integer.parseInt(sharedPreferences.getString("timer_duration", ""));
             } catch (NumberFormatException e) {
                 reasons.add("aucune durée n'a été indiquée pour le compte à rebours");
             }
@@ -155,7 +171,7 @@ public class GameParameters {
                 if (bonusTimerLetters == null || bonusTimerLetters.isEmpty())
                     reasons.add("aucune lettre difficile n'a été indiquée");
                 try {
-                    bonusTimerDuration = Integer.parseInt(sharedPreferences.getString("dl_time", "0"));
+                    bonusTimerDuration = Integer.parseInt(sharedPreferences.getString("dl_time", ""));
                 } catch (NumberFormatException e) {
                     reasons.add("aucune durée n'a été indiquée pour le compte à rebours bonus");
                 }
@@ -172,14 +188,16 @@ public class GameParameters {
 
         randomDoublePointsOn = sharedPreferences.getBoolean("rd_switch", false);
         if (randomDoublePointsOn) {
-            probabilityRandom = sharedPreferences.getInt("rd_probability", 1);
-            if (probabilityRandom == 0)
+            probabilityPercentage = sharedPreferences.getInt("rd_probability", 0);
+            if (probabilityPercentage == 0)
                 reasons.add("la probabilité indiquée est de 0%");
-            if (probabilityRandom == 100)
+            if (probabilityPercentage == 100)
                 reasons.add("la probabilité indiquée est de 100%");
         } else {
-            probabilityRandom = -1;
+            probabilityPercentage = -1;
         }
+
+        isSoundOn = sharedPreferences.getBoolean("sound_switch", false);
 
         if (!reasons.isEmpty()) throw new GameNotReadyException(reasons);
     }
@@ -187,16 +205,52 @@ public class GameParameters {
     @NotNull
     @Override
     public String toString() {
-        return "GameParameters{" +
-                "gameEndsWithPoints=" + gameEndsWithPoints +
-                ", pointsGameEnd=" + pointsGameEnd +
-                ", timerOn=" + timerOn +
-                ", timerDuration=" + timerDuration +
-                ", bonusTimerOn=" + bonusTimerOn +
-                ", bonusTimerLetters=" + bonusTimerLetters +
-                ", bonusTimerDuration=" + bonusTimerDuration +
-                ", randomDoublePointsOn=" + randomDoublePointsOn +
-                ", probabilityRandom=" + probabilityRandom +
-                '}';
+        StringBuilder msg = new StringBuilder();
+
+        // fin de jeu
+        if (doGameEndsWithPoints()) {
+            msg.append("* La partie s'arrêtera lorsqu'un joueur aura atteint ")
+                    .append(getPointsGameEnd())
+                    .append(" points\n");
+        } else {
+            msg.append("* La partie s'arrêtera lorsque les 26 lettres de l'alphabet auront été jouées\n");
+        }
+
+        // timer
+        if (isTimerOn()) {
+            msg.append("* Compte à rebours activé, chaque manche durera ")
+                    .append(getTimerDuration())
+                    .append(" secondes\n");
+
+            //timer bonus
+            if (isBonusTimerOn()) {
+                msg.append("* Une durée de ")
+                        .append(getBonusTimerDuration())
+                        .append(" secondes sera ajoutée pour les lettres ")
+                        .append(getBonusTimerLetters())
+                        .append("\n");
+            } else {
+                msg.append("* Pas de temps supplémentaire pour les lettres difficiles\n");
+            }
+        } else {
+            msg.append("* Compte à rebours désactivé\n");
+        }
+
+        // compte double
+        if (isRandomDoublePointsOn()) {
+            msg.append("* Chaque manche aura une probabilité de ")
+                    .append(getProbabilityPercentage())
+                    .append("% de compter double pour chaque joueur\n");
+        } else {
+            msg.append("* Pas d'aléatoire ajouté\n");
+        }
+
+        // son
+        if (isSoundOn())
+            msg.append("* Sons activés");
+        else
+            msg.append("* Sons désactivés");
+
+        return msg.toString();
     }
 }
