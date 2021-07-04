@@ -13,6 +13,8 @@ import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SeekBarPreference;
 import androidx.preference.SwitchPreferenceCompat;
 
+import java.util.TreeSet;
+
 import be.thefluffypangolin.paysville.R;
 
 /**
@@ -113,8 +115,8 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                     return "Sélectionnez au moins une lettre !";
                 else {
                     StringBuilder text = new StringBuilder();
-                    for (int i = 0; i < difficultLettersList.getValues().size(); i++)
-                        text.append(difficultLettersList.getValues().toArray()[i]).append(" ");
+                    TreeSet<String> set = new TreeSet<>(difficultLettersList.getValues());
+                    for (String s : set) text.append(s).append(" ");
                     return text.toString();
                 }
             });

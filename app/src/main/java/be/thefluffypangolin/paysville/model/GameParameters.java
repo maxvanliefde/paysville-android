@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * La classe GameParameters gère les paramètres d'une partie de Pays-Ville.
@@ -224,10 +225,12 @@ public class GameParameters {
 
             //timer bonus
             if (isBonusTimerOn()) {
+                StringBuilder letters = new StringBuilder(new TreeSet<>(getBonusTimerLetters()).toString());
+                letters.deleteCharAt(0).deleteCharAt(letters.length()-1);
                 msg.append("* Une durée de ")
                         .append(getBonusTimerDuration())
                         .append(" secondes sera ajoutée pour les lettres ")
-                        .append(getBonusTimerLetters())
+                        .append(letters)
                         .append("\n");
             } else {
                 msg.append("* Pas de temps supplémentaire pour les lettres difficiles\n");
