@@ -1,5 +1,6 @@
 package be.thefluffypangolin.paysville;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -52,7 +53,12 @@ public class MainActivity extends AppCompatActivity implements LaunchGameDialogF
     @Override
     public void onDialogLaunchClick(DialogFragment dialog, GameParameters parameters) {
         // lance une partie
-        Toast.makeText(this, parameters.toString(), Toast.LENGTH_SHORT).show();
+        // Toast.makeText(this, parameters.toString(), Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(this, PlayersChoiceActivity.class);
+        Bundle bundle = new Bundle();
+        intent.putExtra("GAME_PARAMETERS_STRING", parameters.toString());
+        startActivity(intent);
     }
 
     @Override

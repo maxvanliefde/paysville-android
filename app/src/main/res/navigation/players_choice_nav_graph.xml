@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/players_choice_nav_graph"
+    app:startDestination="@id/playersNumberFragment">
+
+    <fragment
+        android:id="@+id/playersNumberFragment"
+        android:name="be.thefluffypangolin.paysville.ui.players_number.PlayersNumberFragment"
+        android:label="players_number_fragment"
+        tools:layout="@layout/fragment_players_number" >
+        <action
+            android:id="@+id/action_playersNumberFragment_to_playersNamesFragment"
+            app:destination="@id/playersNamesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/playersNamesFragment"
+        android:name="be.thefluffypangolin.paysville.ui.players_names.PlayersNamesFragment"
+        android:label="fragment_players_names"
+        tools:layout="@layout/fragment_players_names" >
+        <action
+            android:id="@+id/action_playersNamesFragment_to_playersDoneFragment"
+            app:destination="@id/playersDoneFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/playersDoneFragment"
+        android:name="be.thefluffypangolin.paysville.ui.players_done.PlayersDoneFragment"
+        android:label="fragment_players_done"
+        tools:layout="@layout/fragment_players_done" />
+</navigation>

@@ -11,9 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PaysVille"
         tools:ignore="AllowBackup">
-        <activity
-            android:name=".MainActivity">
-<!--            android:label="@string/title_activity_main">-->
+        <activity android:name=".PlayersChoiceActivity" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
