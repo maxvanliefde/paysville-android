@@ -45,9 +45,9 @@ public class MainActivity extends AppCompatActivity implements LaunchGameDialogF
     }
 
     @Override
-    public void onDialogLaunchClick(DialogFragment dialog) {
+    public void onDialogLaunchClick(DialogFragment dialog, GameParameters parameters) {
         // lance une partie
-        Toast.makeText(this, "c'est parti", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, parameters.toString(), Toast.LENGTH_SHORT).show();
     }
 
     @Override

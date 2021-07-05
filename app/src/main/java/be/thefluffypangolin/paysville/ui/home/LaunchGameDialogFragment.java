@@ -26,7 +26,7 @@ public class LaunchGameDialogFragment extends DialogFragment {
      * implement this interface in order to receive event callbacks.
      * Each method passes the DialogFragment in case the host needs to query it. */
     public interface LaunchGameDialogListener {
-        void onDialogLaunchClick(DialogFragment dialog);
+        void onDialogLaunchClick(DialogFragment dialog, GameParameters parameters);
         void onDialogModifyClick(DialogFragment dialog);
         void onGameNotReadyException(DialogFragment dialog, GameParameters.GameNotReadyException e);
     }
@@ -51,12 +51,14 @@ public class LaunchGameDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+
         try {
+            GameParameters parameters = getGameParameters();
             builder.setTitle("Avant de démarrer...")
                     .setMessage("Voici les paramètres du jeu, il est encore temps de les modifier si vous le souhaitez !\n\n"
-                            + getGameParameters().toString())
+                            + parameters.toString())
                     .setPositiveButton("Démarrer la partie",
-                            (dialog, which) -> listener.onDialogLaunchClick(LaunchGameDialogFragment.this))
+                            (dialog, which) -> listener.onDialogLaunchClick(LaunchGameDialogFragment.this, parameters))
                     .setNegativeButton("Modifier les paramètres",
                             (dialog, which) -> listener.onDialogModifyClick(LaunchGameDialogFragment.this));
         } catch (GameParameters.GameNotReadyException e) {
