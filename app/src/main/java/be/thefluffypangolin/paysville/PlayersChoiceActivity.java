@@ -11,6 +11,7 @@ import android.widget.Toast;
 import java.util.Arrays;
 
 import be.thefluffypangolin.paysville.databinding.ActivityPlayersChoiceBinding;
+import be.thefluffypangolin.paysville.model.GameParameters;
 import be.thefluffypangolin.paysville.ui.players_done.PlayersDoneFragment;
 
 public class PlayersChoiceActivity extends AppCompatActivity
@@ -18,6 +19,7 @@ public class PlayersChoiceActivity extends AppCompatActivity
 
     private ActivityPlayersChoiceBinding binding;
 
+    private GameParameters gameParameters;
     private int numberOfPlayers;
     private String[] playersNames;
 
@@ -31,9 +33,8 @@ public class PlayersChoiceActivity extends AppCompatActivity
         if (actionBar != null) actionBar.setTitle("Sélection des joueurs");
 
         // Récupérer les paramètres
-//        Intent intent = getIntent();
-//        String msg = intent.getStringExtra("GAME_PARAMETERS_STRING");
-//        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        Intent intent = getIntent();
+        gameParameters = intent.getParcelableExtra("GAME_PARAMETERS");
     }
 
     @Override
@@ -48,7 +49,8 @@ public class PlayersChoiceActivity extends AppCompatActivity
 
     @Override
     public void launchNewActivity() {
-        Toast.makeText(this, Integer.toString(numberOfPlayers) + Arrays.toString(playersNames), Toast.LENGTH_LONG)
+
+        Toast.makeText(this, gameParameters.toString() + numberOfPlayers + Arrays.toString(playersNames), Toast.LENGTH_LONG)
                 .show();
     }
 }

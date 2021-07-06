@@ -1,9 +1,12 @@
 package be.thefluffypangolin.paysville.model;
 
 import android.content.SharedPreferences;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
@@ -16,8 +19,12 @@ import java.util.TreeSet;
  *     <li>Timer ou non pour chaque manche;</li>
  *     <li><ul><li>Timer bonus pour les mauvaises lettres ou non;</li></ul></li>
  *     <li>Probabilité de doubler les points d'une manche;</li>
+ *     <li>Sons du jeu activés ou non</li>
+ * </ul>
  */
-public class GameParameters {
+public class GameParameters implements Parcelable {
+
+    /* Exceptions */
 
     public static class BadParameterException extends Exception {
         public BadParameterException(String param) {
@@ -26,7 +33,7 @@ public class GameParameters {
     }
 
     public static class GameNotReadyException extends Exception {
-        private Set<String> reasons;
+        private final Set<String> reasons;
         public GameNotReadyException(Set<String> reasons) {
             super();
             this.reasons = reasons;
@@ -35,6 +42,8 @@ public class GameParameters {
             return reasons;
         }
     }
+
+    /* Attributes */
 
     private boolean gameEndsWithPoints;
     private int pointsGameEnd;
@@ -51,6 +60,21 @@ public class GameParameters {
 
     private boolean isSoundOn;
 
+    /* Required for Parcelable */
+    public static final Creator<GameParameters> CREATOR = new Creator<GameParameters>() {
+        @Override
+        public GameParameters createFromParcel(Parcel in) {
+            return new GameParameters(in);
+        }
+
+        @Override
+        public GameParameters[] newArray(int size) {
+            return new GameParameters[size];
+        }
+    };
+
+
+    /* Methods */
 
     public boolean doGameEndsWithPoints() {
         return gameEndsWithPoints;
@@ -255,5 +279,50 @@ public class GameParameters {
             msg.append("* Sons désactivés");
 
         return msg.toString();
+    }
+
+    /* Parcelable part */
+
+    public GameParameters(Parcel in) {
+        this.gameEndsWithPoints = in.readInt() != 0;
+        this.pointsGameEnd = in.readInt();
+
+        this.timerOn = in.readInt() != 0;
+        this.timerDuration = in.readInt();
+
+        this.bonusTimerOn = in.readInt() != 0;
+        String[] letters = in.createStringArray();
+        if (letters.length == 0) this.bonusTimerLetters = null;
+        else this.bonusTimerLetters = new HashSet<>(Arrays.asList(letters));
+        this.bonusTimerDuration = in.readInt();
+
+        this.randomDoublePointsOn = in.readInt() != 0;
+        this.probabilityPercentage = in.readInt();
+
+        this.isSoundOn = in.readInt() != 0;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(gameEndsWithPoints? 1:0);
+        dest.writeInt(pointsGameEnd);
+
+        dest.writeInt(timerOn? 1:0);
+        dest.writeInt(timerDuration);
+
+        dest.writeInt(bonusTimerOn? 1:0);
+        if (bonusTimerLetters == null) dest.writeStringArray(new String[0]);
+        else dest.writeStringArray(bonusTimerLetters.toArray(new String[0]));
+        dest.writeInt(bonusTimerDuration);
+
+        dest.writeInt(randomDoublePointsOn? 1:0);
+        dest.writeInt(probabilityPercentage);
+
+        dest.writeInt(isSoundOn? 1:0);
     }
 }
