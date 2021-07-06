@@ -30,8 +30,12 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import be.thefluffypangolin.paysville.R;
 import be.thefluffypangolin.paysville.databinding.FragmentPlayersNamesBinding;
@@ -53,7 +57,6 @@ public class PlayersNamesFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        System.out.println("created");
         numberOfPlayers = PlayersNamesFragmentArgs.fromBundle(getArguments()).getNumberOfPlayers();
         playersNamesViewModel = new ViewModelProvider(this).get(PlayersNamesViewModel.class);
         if (playersNamesViewModel.getPlayersNames() == null)
@@ -95,12 +98,21 @@ public class PlayersNamesFragment extends Fragment {
         }
 
         fab.setOnClickListener(v -> {
-            boolean[] errors = errorsInFields();
             boolean error = false;
+            boolean[] empties = errorsInFields();
+            Set<Integer> duplicates = null;
+            try {
+                duplicates = findDuplicates(textInputLayouts.stream()
+                        .map(x -> x.getEditText().getText().toString())
+                        .collect(Collectors.toList()));
+            } catch (NullPointerException e) {
+                error = true;
+            }
 
-            // parcourt la liste pour vérifier s'il y a une erreur
+
+            // parcourt la liste pour vérifier si un champ est vide
             for (int i = 0; i < numberOfPlayers; i++) {
-                if (errors[i]) {
+                if (empties[i]) {
                     error = true;
                     textInputLayouts.get(i).setErrorEnabled(true);
                     textInputLayouts.get(i).setError("Entrez un nom !");
@@ -108,9 +120,17 @@ public class PlayersNamesFragment extends Fragment {
                     textInputLayouts.get(i).setErrorEnabled(false);
                 }
             }
+            
+            if (duplicates != null) {
+                for (Integer i : duplicates) {
+                    error = true;
+                    textInputLayouts.get(i).setErrorEnabled(true);
+                    textInputLayouts.get(i).setError("Veuillez choisir un autre nom !");
+                }                
+            }
+
 
             if (error) {
-                // au moins un champ est vide
                 Snackbar.make(requireView(), "Vérifiez ce que vous avez entré",
                         BaseTransientBottomBar.LENGTH_SHORT)
                         .show();
@@ -133,8 +153,21 @@ public class PlayersNamesFragment extends Fragment {
         boolean[] list = new boolean[numberOfPlayers];
         for (int i = 0; i < numberOfPlayers; i++) {
             EditText editText = textInputLayouts.get(i).getEditText();
-            list[i] = (editText != null && editText.getText().length() == 0);
+            list[i] = (editText == null || editText.getText().length() == 0);
         }
         return list;
+    }
+
+    private Set<Integer> findDuplicates(List<String> list) {
+        final Set<Integer> setToReturn = new HashSet<>();
+        final Set<String> setTemp = new HashSet<>();
+
+        for (int i = 0; i < numberOfPlayers; i++) {
+            String s = list.get(i);
+            if (!s.equals("") && !setTemp.add(s))
+                setToReturn.add(i);
+        }
+
+        return setToReturn;
     }
 }
