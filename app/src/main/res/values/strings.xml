@@ -8,6 +8,8 @@
     <string name="title_about_bottom">À propos</string>
     <string name="title_about">À propos de cette application</string>
     <string name="launch_game_text">Lancer le jeu</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_players_number">Combien de joueurs êtes-vous ?</string>
+    <string name="text_players_names">Bienvenue à vous %1$d ! \nComment vous appelez-vous ?</string>
+    <string name="text_players_done">C\'est bien noté,\n %1$s !\nOn va pouvoir commencer à jouer !</string>
+    <string name="next">Suivant</string>
 </resources>

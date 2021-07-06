@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PlayersChoiceActivity">
+    tools:context=".PlayersChoiceActivity"
+    >
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment_activity_players_choice"
@@ -12,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/players_choice_nav_graph"
+        app:navGraph="@navigation/players_choice_navigation"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

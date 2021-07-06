@@ -1,66 +1,87 @@
 package be.thefluffypangolin.paysville.ui.players_done;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Arrays;
+
+import be.thefluffypangolin.paysville.PlayersChoiceActivity;
 import be.thefluffypangolin.paysville.R;
+import be.thefluffypangolin.paysville.databinding.FragmentPlayersDoneBinding;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PlayersDoneFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class PlayersDoneFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private FragmentPlayersDoneBinding binding;
+    private TextView text;
+    private FloatingActionButton fab;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private int numberOfPlayers;
+    private String[] playersNames;
 
-    public PlayersDoneFragment() {
-        // Required empty public constructor
-    }
+    private FABClicked listener;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PlayersDoneFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static PlayersDoneFragment newInstance(String param1, String param2) {
-        PlayersDoneFragment fragment = new PlayersDoneFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    /* permet d'envoyer les données récoltées à l'activité */
+    public interface FABClicked {
+        void sendNumberOfPlayers(int number);
+        void sendPlayersNames(String[] names);
+        void launchNewActivity();
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        binding = FragmentPlayersDoneBinding.inflate(inflater, container, false);
+        fab = binding.fabPlayersDone;
+        text = binding.textPlayersDone;
+
+        numberOfPlayers = PlayersDoneFragmentArgs.fromBundle(getArguments()).getNumberOfPlayers();
+        playersNames = PlayersDoneFragmentArgs.fromBundle(getArguments()).getPlayersNames();
+
+        text.setText(String.format(getResources().getString(R.string.text_players_done),
+                getPlayersNamesString(playersNames)));
+
+        fab.setOnClickListener(v -> {
+            listener.sendNumberOfPlayers(numberOfPlayers);
+            listener.sendPlayersNames(playersNames);
+            listener.launchNewActivity();
+        });
+
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onAttach(@NonNull @NotNull Context context) {
+        super.onAttach(context);
+        try {
+            listener = (FABClicked) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(requireActivity().toString()
+                    + " must implement FABClicked");
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_players_done, container, false);
+    private String getPlayersNamesString(String[] names) {
+        if (names.length == 1)
+            return names[0];
+        else {
+            StringBuilder s = new StringBuilder();
+            for (int i = 0; i < names.length - 1; i++)
+                s.append(names[i]).append(", ");
+            s.append("et ").append(names[names.length - 1]);
+            return s.toString();
+        }
     }
 }

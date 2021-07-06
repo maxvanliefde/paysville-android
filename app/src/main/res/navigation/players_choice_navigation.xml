@@ -11,7 +11,7 @@
         android:label="players_number_fragment"
         tools:layout="@layout/fragment_players_number" >
         <action
-            android:id="@+id/action_playersNumberFragment_to_playersNamesFragment"
+            android:id="@+id/action_players_number_to_names"
             app:destination="@id/playersNamesFragment" />
     </fragment>
     <fragment
@@ -20,12 +20,22 @@
         android:label="fragment_players_names"
         tools:layout="@layout/fragment_players_names" >
         <action
-            android:id="@+id/action_playersNamesFragment_to_playersDoneFragment"
+            android:id="@+id/action_players_names_to_done"
             app:destination="@id/playersDoneFragment" />
+        <argument
+            android:name="numberOfPlayers"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/playersDoneFragment"
         android:name="be.thefluffypangolin.paysville.ui.players_done.PlayersDoneFragment"
         android:label="fragment_players_done"
-        tools:layout="@layout/fragment_players_done" />
+        tools:layout="@layout/fragment_players_done" >
+        <argument
+            android:name="numberOfPlayers"
+            app:argType="integer" />
+        <argument
+            android:name="playersNames"
+            app:argType="string[]" />
+    </fragment>
 </navigation>
