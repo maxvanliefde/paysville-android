@@ -281,6 +281,16 @@ public class GameParameters implements Parcelable {
         return msg.toString();
     }
 
+    /**
+     * Crée une liste de joueurs de noms donnés
+     * @param names les noms des joueurs
+     * @return une liste contenant de nouvelles instances de Player,
+     * dans le même ordre que la liste names
+     */
+    public Player[] generatePlayersList(String[] names) {
+        return Arrays.stream(names).map(Player::new).toArray(Player[]::new);
+    }
+
     /* Parcelable part */
 
     public GameParameters(Parcel in) {
