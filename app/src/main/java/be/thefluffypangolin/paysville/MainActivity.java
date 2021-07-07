@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity implements LaunchGameDialogF
     @Override
     public void onDialogLaunchClick(DialogFragment dialog, GameParameters parameters) {
         // lance une partie
-        Toast.makeText(this, parameters.toString(), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, PlayersChoiceActivity.class);
         intent.putExtra("GAME_PARAMETERS", parameters);
         startActivity(intent);
