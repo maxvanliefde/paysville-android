@@ -1,5 +1,6 @@
 package be.thefluffypangolin.paysville.ui.players_names;
 
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -47,6 +48,7 @@ public class PlayersNamesFragment extends Fragment {
 
     private PlayersNamesViewModel playersNamesViewModel;
     private FragmentPlayersNamesBinding binding;
+    private CoordinatorLayout coordinatorLayout;
     private TextView text;
     private LinearLayout linearLayout;
     private List<TextInputLayout> textInputLayouts;
@@ -65,6 +67,7 @@ public class PlayersNamesFragment extends Fragment {
         if (playersNamesViewModel.getPlayersNames() == null)
             playersNamesViewModel.initializePlayersNamesList(numberOfPlayers);
         binding = FragmentPlayersNamesBinding.inflate(inflater, container, false);
+        coordinatorLayout = binding.coordinatorPlayersNames;
         text = binding.textPlayersNames;
         linearLayout = binding.layoutPlayersNames;
         textInputLayouts = new ArrayList<>();
@@ -143,7 +146,7 @@ public class PlayersNamesFragment extends Fragment {
             }
 
             if (error) {
-                Snackbar.make(requireView(), "Vérifiez ce que vous avez entré",
+                Snackbar.make(coordinatorLayout, "Vérifiez ce que vous avez entré",
                         BaseTransientBottomBar.LENGTH_SHORT)
                         .show();
             } else {

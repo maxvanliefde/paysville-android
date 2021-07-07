@@ -1,52 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.players_names.PlayersNamesFragment">
+    tools:context=".ui.players_names.PlayersNamesFragment"
+    android:id="@+id/coordinator_players_names"
+    >
 
-    <TextView
-        android:id="@+id/text_players_names"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textAlignment="center"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:clickable="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/scroll_view_players_names"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:layout_height="match_parent" >
 
-    <ScrollView
-        android:id="@+id/scroll_view_players_names"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_players_names">
-
-        <LinearLayout
-            android:id="@+id/layout_players_names"
+        <TextView
+            android:id="@+id/text_players_names"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:layout_margin="@dimen/activity_horizontal_margin"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:clickable="true"/>
+            android:clickable="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/scroll_view_players_names"
+            app:layout_constraintTop_toTopOf="parent"/>
 
-    </ScrollView>
+        <ScrollView
+            android:id="@+id/scroll_view_players_names"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_players_names">
+
+            <LinearLayout
+                android:id="@+id/layout_players_names"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="64dp"
+                android:paddingEnd="64dp"
+                android:orientation="vertical"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:clickable="true"/>
+
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_players_names"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/ic_baseline_navigate_next_24dp"
@@ -55,4 +66,4 @@
         android:contentDescription="@string/next"/>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
