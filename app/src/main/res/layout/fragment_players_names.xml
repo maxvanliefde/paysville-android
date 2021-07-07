@@ -12,6 +12,9 @@
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:textAlignment="center"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:clickable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/scroll_view_players_names"
@@ -31,7 +34,10 @@
             android:id="@+id/layout_players_names"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            android:orientation="vertical"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:clickable="true"/>
 
     </ScrollView>
 

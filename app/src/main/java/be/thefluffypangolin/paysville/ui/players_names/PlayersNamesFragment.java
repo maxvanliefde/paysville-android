@@ -3,6 +3,7 @@ package be.thefluffypangolin.paysville.ui.players_names;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 
@@ -12,11 +13,13 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -92,11 +95,17 @@ public class PlayersNamesFragment extends Fragment {
                     textInputLayout.setErrorEnabled(false);
                 }
             });
+            textInputEditText.setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS);
             textInputLayout.addView(textInputEditText);
             linearLayout.addView(textInputLayout, i);
             textInputLayouts.add(textInputLayout);
         }
 
+        // cache le clavier si besoin
+        linearLayout.setOnFocusChangeListener((v, hasFocus) -> {if (hasFocus) hideKeyboard(v);});
+        text.setOnFocusChangeListener((v, hasFocus) -> {if (hasFocus) hideKeyboard(v);});
+
+        // bouton suivant
         fab.setOnClickListener(v -> {
             boolean error = false;
             boolean[] empties = errorsInFields();
@@ -109,9 +118,12 @@ public class PlayersNamesFragment extends Fragment {
                 error = true;
             }
 
+            // cache le clavier
+            hideKeyboard(fab);
 
             // parcourt la liste pour vérifier si un champ est vide
             for (int i = 0; i < numberOfPlayers; i++) {
+                textInputLayouts.get(i).clearFocus();
                 if (empties[i]) {
                     error = true;
                     textInputLayouts.get(i).setErrorEnabled(true);
@@ -120,15 +132,15 @@ public class PlayersNamesFragment extends Fragment {
                     textInputLayouts.get(i).setErrorEnabled(false);
                 }
             }
-            
+
+            // vérifie les noms en doublons
             if (duplicates != null) {
                 for (Integer i : duplicates) {
                     error = true;
                     textInputLayouts.get(i).setErrorEnabled(true);
-                    textInputLayouts.get(i).setError("Veuillez choisir un autre nom !");
+                    textInputLayouts.get(i).setError("Veuillez choisir nom différent !");
                 }                
             }
-
 
             if (error) {
                 Snackbar.make(requireView(), "Vérifiez ce que vous avez entré",
@@ -158,6 +170,7 @@ public class PlayersNamesFragment extends Fragment {
         return list;
     }
 
+
     private Set<Integer> findDuplicates(List<String> list) {
         final Set<Integer> setToReturn = new HashSet<>();
         final Set<String> setTemp = new HashSet<>();
@@ -169,5 +182,14 @@ public class PlayersNamesFragment extends Fragment {
         }
 
         return setToReturn;
+    }
+
+    /**
+     * Cache le clavier
+     * @param v la vue qui fait la demande
+     */
+    private void hideKeyboard(View v) {
+        InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 }
