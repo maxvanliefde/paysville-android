@@ -39,7 +39,7 @@ public class PaysVilleGame {
     }
 
     /**
-     * Exception lancée lorsqu'une Factory veut générer une nouvelle manche,
+     * Exception lancée lorsqu'une nouvelle manche veut être créée,
      * mais que toutes les lettres de l'alphabet ont déjà été générées
      */
     public static class NoLetterLeftException extends Exception {
@@ -119,6 +119,81 @@ public class PaysVilleGame {
             } catch (IndexOutOfBoundsException e) {
                 throw new NoLetterLeftException();
             }
+        }
+    }
+
+    /**
+     * @return les paramètres de la partie
+     */
+    public GameParameters getGameParameters() {
+        return parameters;
+    }
+
+    /**
+     * @return la liste des manches de la partie
+     */
+    public List<PaysVilleRound> getRounds() {
+        return rounds;
+    }
+
+    /**
+     * @return les points actuels, sous la forme d'un mappage entre un joueur et ses points
+     */
+    public Map<Player, Integer> getActualPoints() {
+        return actualPoints;
+    }
+
+    /**
+     * @return la manche actuelle, i.e. la dernière de la liste rounds
+     */
+    public PaysVilleRound getActualRound() {
+        return rounds.get(rounds.size() - 1);
+    }
+
+    /**
+     * Ajoute une nouvelle manche à la liste des manches
+     * @return la lettre de la nouvelle manche
+     */
+    public char addNewRound() throws NoLetterLeftException {
+        PaysVilleRound round = factory.newRound();
+        rounds.add(round);
+        return round.getLetter();
+    }
+
+    /**
+     * Retourne le numéro de la manche actuelle, i.e. la dernière ajoutée avec {@link #addNewRound()},
+     * ce qui correspond à la longueur de la liste rounds.
+     * @return le numéro de la dernière manche ajoutée
+     */
+    public int getActualRoundNumber() {
+        return rounds.size();
+    }
+
+    /**
+     * Ajoute le score d'un joueur à la manche actuelle,
+     * et et à jour les points totaux de la partie.
+     * @param player un joueur
+     * @param score son score à la manche actuelle
+     */
+    public void addScoreToActualRound(Player player, int score) {
+        getActualRound().setScore(player, score);
+        Integer actualScore = getActualPoints().get(player);
+        if (actualScore != null) getActualPoints().put(player, actualScore + score);
+    }
+
+    /**
+     * Vérifie si le jeu est fini, en fonction des paramètres du jeu.
+     * @return vrai si le jeu est terminé, ou faux sinon
+     */
+    public boolean isGameFinished() {
+        if (parameters.doGameEndsWithPoints()) {
+            for (Player p : players) {
+                if (getActualPoints().get(p) >= parameters.getPointsGameEnd())
+                    return true;
+            }
+            return false;
+        } else {
+            return getActualRoundNumber() == 26;
         }
     }
 }
