@@ -227,6 +227,16 @@ public class GameParameters implements Parcelable {
         if (!reasons.isEmpty()) throw new GameNotReadyException(reasons);
     }
 
+    /**
+     * Génère un booléen avec la probabilité de l'instance.
+     * @return faux si {@link #randomDoublePointsOn} est faux <br>
+     *     vrai ou faux avec une probabilité de {@link #probabilityPercentage}% de vrai sinon
+     */
+    public boolean randomBoolean() {
+        if (!randomDoublePointsOn) return false;
+        else return Math.random() <= probabilityPercentage/100.0;
+    }
+
     @NotNull
     @Override
     public String toString() {

@@ -87,6 +87,22 @@ public class PaysVilleGame {
         public Integer getScore(Player player) {
             return this.points.get(player);
         }
+
+        /**
+         * @return la durée du timer en secondes pour cette manche, ou 0 s'il est désactivé
+         */
+        public int getTimer() {
+            if (!parameters.isTimerOn())
+                return 0;
+            else {
+                int time = parameters.getTimerDuration();
+                if (parameters.isBonusTimerOn()
+                        && parameters.getBonusTimerLetters().contains(Character.toString(letter)))
+                    return time + parameters.getBonusTimerDuration();
+                else
+                    return time;
+            }
+        }
     }
 
     /**
@@ -182,18 +198,50 @@ public class PaysVilleGame {
     }
 
     /**
-     * Vérifie si le jeu est fini, en fonction des paramètres du jeu.
+     * Ajoute les scores de chaque joueur à la manche actuelle,
+     * et met à jour les points totaux de la partie.
+     * Le joueur correspondant à scores[i] doit être players[i].
+     * @param scores les scores obtenus par les joueurs {@link #players} à la manche actuelle
+     */
+    public void addScoresToActualRound(int[] scores) {
+        for (int i = 0; i < numberOfPlayers; i++) {
+            addScoreToActualRound(players[i], scores[i]);
+        }
+    }
+
+    /**
+     * Vérifie si la partie est finie, en fonction des paramètres du jeu.
      * @return vrai si le jeu est terminé, ou faux sinon
      */
     public boolean isGameFinished() {
         if (parameters.doGameEndsWithPoints()) {
             for (Player p : players) {
-                if (getActualPoints().get(p) >= parameters.getPointsGameEnd())
+                Integer points = getActualPoints().get(p);
+                if (points != null && points >= parameters.getPointsGameEnd()) {
                     return true;
+                }
             }
             return false;
         } else {
             return getActualRoundNumber() == 26;
+        }
+    }
+
+    /**
+     * todo vérifier s'il y a plusieurs gagants
+     * @return le gagnant de la partie, ou null si elle n'est pas terminée
+     */
+    public Player getWinner() {
+        if (!isGameFinished()) return null;
+        else {
+            int max = 0;
+            Player winner = players[0];
+            for (int i = 0; i < numberOfPlayers; i++) {
+                Integer score = getActualPoints().get(players[i]);
+                if (score != null && score > max)
+                    winner = players[i];
+            }
+            return winner;
         }
     }
 }
