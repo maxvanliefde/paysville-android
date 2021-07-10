@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements LaunchGameDialogF
 
     private ActivityMainBinding binding;
 
+    public static final String KEY_GAME_PARAMETERS = "GAME_PARAMETERS_ARG";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements LaunchGameDialogF
     public void onDialogLaunchClick(DialogFragment dialog, GameParameters parameters) {
         // lance une partie
         Intent intent = new Intent(this, PlayersChoiceActivity.class);
-        intent.putExtra("GAME_PARAMETERS", parameters);
+        intent.putExtra(KEY_GAME_PARAMETERS, parameters);
         startActivity(intent);
     }
 

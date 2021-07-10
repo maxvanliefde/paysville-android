@@ -23,6 +23,9 @@ public class PlayersChoiceActivity extends AppCompatActivity
     private int numberOfPlayers;
     private String[] playersNames;
 
+    public static String KEY_NUMBER_OF_PLAYERS = "NUMBER_OF_PLAYERS_ARG";
+    public static String KEY_PLAYERS_NAMES = "PLAYERS_NAMES_ARG";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,23 +37,23 @@ public class PlayersChoiceActivity extends AppCompatActivity
 
         // Récupérer les paramètres
         Intent intent = getIntent();
-        gameParameters = intent.getParcelableExtra("GAME_PARAMETERS");
+        gameParameters = intent.getParcelableExtra(MainActivity.KEY_GAME_PARAMETERS);
+
+        Toast.makeText(this, "test", Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void sendNumberOfPlayers(int number) {
+    public void sendArgs(int number, String[] names) {
         numberOfPlayers = number;
-    }
-
-    @Override
-    public void sendPlayersNames(String[] names) {
         playersNames = names;
     }
 
     @Override
-    public void launchNewActivity() {
-
-        Toast.makeText(this, gameParameters.toString() + numberOfPlayers + Arrays.toString(playersNames), Toast.LENGTH_LONG)
-                .show();
+    public void launchGameActivity() {
+        Intent intent = new Intent(this, GameActivity.class)
+                .putExtra(MainActivity.KEY_GAME_PARAMETERS, gameParameters)
+                .putExtra(KEY_NUMBER_OF_PLAYERS, numberOfPlayers)
+                .putExtra(KEY_PLAYERS_NAMES, playersNames);
+        startActivity(intent);
     }
 }

@@ -9,16 +9,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-
-import be.thefluffypangolin.paysville.PlayersChoiceActivity;
 import be.thefluffypangolin.paysville.R;
 import be.thefluffypangolin.paysville.databinding.FragmentPlayersDoneBinding;
 
@@ -35,9 +31,8 @@ public class PlayersDoneFragment extends Fragment {
 
     /* permet d'envoyer les données récoltées à l'activité */
     public interface FABClicked {
-        void sendNumberOfPlayers(int number);
-        void sendPlayersNames(String[] names);
-        void launchNewActivity();
+        void sendArgs(int number, String[] names);
+        void launchGameActivity();
     }
 
     @Override
@@ -54,9 +49,8 @@ public class PlayersDoneFragment extends Fragment {
                 getPlayersNamesString(playersNames)));
 
         fab.setOnClickListener(v -> {
-            listener.sendNumberOfPlayers(numberOfPlayers);
-            listener.sendPlayersNames(playersNames);
-            listener.launchNewActivity();
+            listener.sendArgs(numberOfPlayers, playersNames);
+            listener.launchGameActivity();
         });
 
         return binding.getRoot();
