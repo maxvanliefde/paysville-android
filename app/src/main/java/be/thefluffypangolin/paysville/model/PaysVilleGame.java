@@ -169,6 +169,7 @@ public class PaysVilleGame {
     /**
      * Ajoute une nouvelle manche à la liste des manches
      * @return la lettre de la nouvelle manche
+     * @throws NoLetterLeftException si plus aucune lettre de l'alphabet n'est disponible
      */
     public char addNewRound() throws NoLetterLeftException {
         PaysVilleRound round = factory.newRound();
