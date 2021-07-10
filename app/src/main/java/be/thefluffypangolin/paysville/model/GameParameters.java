@@ -297,7 +297,7 @@ public class GameParameters implements Parcelable {
      * @return une liste contenant de nouvelles instances de Player,
      * dans le même ordre que la liste names
      */
-    public Player[] generatePlayersList(String[] names) {
+    public static Player[] generatePlayersList(String[] names) {
         return Arrays.stream(names).map(Player::new).toArray(Player[]::new);
     }
 
