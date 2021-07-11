@@ -38,8 +38,6 @@ public class PlayersChoiceActivity extends AppCompatActivity
         // Récupérer les paramètres
         Intent intent = getIntent();
         gameParameters = intent.getParcelableExtra(MainActivity.KEY_GAME_PARAMETERS);
-
-        Toast.makeText(this, "test", Toast.LENGTH_SHORT).show();
     }
 
     @Override
