@@ -55,10 +55,6 @@ public class PlayersNamesFragment extends Fragment {
     private FloatingActionButton fab;
     private int numberOfPlayers;
 
-    public static PlayersNamesFragment newInstance() {
-        return new PlayersNamesFragment();
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -99,14 +95,11 @@ public class PlayersNamesFragment extends Fragment {
                 }
             });
             textInputEditText.setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS);
+            textInputEditText.setOnFocusChangeListener((v, hasFocus) -> {if (!hasFocus) hideKeyboard(v);});
             textInputLayout.addView(textInputEditText);
             linearLayout.addView(textInputLayout, i);
             textInputLayouts.add(textInputLayout);
         }
-
-        // cache le clavier si besoin
-        linearLayout.setOnFocusChangeListener((v, hasFocus) -> {if (hasFocus) hideKeyboard(v);});
-        text.setOnFocusChangeListener((v, hasFocus) -> {if (hasFocus) hideKeyboard(v);});
 
         // bouton suivant
         fab.setOnClickListener(v -> {
