@@ -6,7 +6,7 @@
     app:startDestination="@id/playRoundFragment">
     <fragment
         android:id="@+id/playRoundFragment"
-        android:name="be.thefluffypangolin.paysville.ui.game_play_round.PlayRoundFragment"
+        android:name="be.thefluffypangolin.paysville.ui.game_launch_round.LaunchRoundFragment"
         android:label="fragment_game_play_round"
-        tools:layout="@layout/fragment_game_play_round" />
+        tools:layout="@layout/fragment_game_launch_round" />
 </navigation>

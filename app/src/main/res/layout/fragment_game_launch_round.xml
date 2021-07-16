@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".ui.game_play_round.PlayRoundFragment">
+    tools:context=".ui.game_launch_round.LaunchRoundFragment">
 
     <TextView
         android:layout_width="wrap_content"

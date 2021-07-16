@@ -1,13 +1,11 @@
-package be.thefluffypangolin.paysville.ui.game_play_round;
+package be.thefluffypangolin.paysville.ui.game_launch_round;
 
 import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,27 +14,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jetbrains.annotations.NotNull;
 
 import be.thefluffypangolin.paysville.GameActivity;
 import be.thefluffypangolin.paysville.GameViewModel;
 import be.thefluffypangolin.paysville.R;
-import be.thefluffypangolin.paysville.databinding.FragmentGamePlayRoundBinding;
+import be.thefluffypangolin.paysville.databinding.FragmentGameLaunchRoundBinding;
 
-public class PlayRoundFragment extends Fragment {
+public class LaunchRoundFragment extends Fragment {
 
     private GameViewModel gameModel;
     private GameActivity activity;
     private ExtendedFloatingActionButton fab;
-    private FragmentGamePlayRoundBinding binding;
+    private FragmentGameLaunchRoundBinding binding;
     private TextView textRoundNumber;
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentGamePlayRoundBinding.inflate(inflater, container, false);
+        binding = FragmentGameLaunchRoundBinding.inflate(inflater, container, false);
         fab = activity.getFAB();
         gameModel = new ViewModelProvider(requireActivity()).get(GameViewModel.class);
         textRoundNumber = binding.playRoundNumber;
