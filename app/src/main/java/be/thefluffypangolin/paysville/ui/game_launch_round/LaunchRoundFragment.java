@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,7 +48,13 @@ public class LaunchRoundFragment extends Fragment {
         fab.setText(R.string.play_round);
         fab.setIconResource(R.drawable.ic_play_arrow_24dp);
         fab.setOnClickListener(v -> {
-            Toast.makeText(requireContext(), "suivant", Toast.LENGTH_SHORT).show();
+            if (gameModel.getGame().getGameParameters().isTimerOn()) {
+                NavDirections actionWithTimer = LaunchRoundFragmentDirections.actionLaunchToRoundWithTimer();
+                Navigation.findNavController(activity, R.id.nav_host_fragment_activity_game).navigate(actionWithTimer);
+            } else {
+                NavDirections actionNoTimer = LaunchRoundFragmentDirections.actionLaunchToRoundNoTimer();
+                Navigation.findNavController(activity, R.id.nav_host_fragment_activity_game).navigate(actionNoTimer);
+            }
         });
         
         return binding.getRoot();
