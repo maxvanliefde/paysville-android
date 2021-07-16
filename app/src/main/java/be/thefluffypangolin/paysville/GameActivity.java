@@ -5,10 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.HasDefaultViewModelProviderFactory;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -20,6 +25,7 @@ public class GameActivity extends AppCompatActivity implements HasDefaultViewMod
 
     private ActivityGameBinding binding;
     private GameViewModel model;
+    private ExtendedFloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +34,7 @@ public class GameActivity extends AppCompatActivity implements HasDefaultViewMod
         // binding & ViewModel
         binding = ActivityGameBinding.inflate(getLayoutInflater());
         model = new ViewModelProvider(this).get(GameViewModel.class);
+        fab = binding.fabGame;
         setContentView(binding.getRoot());
 
         // arguments
@@ -38,5 +45,9 @@ public class GameActivity extends AppCompatActivity implements HasDefaultViewMod
 
         // initialisation du jeu, s'il n'existe pas encore
         model.init(parameters, numberOfPlayers, playersNames);
+    }
+
+    public ExtendedFloatingActionButton getFAB() {
+        return fab;
     }
 }
