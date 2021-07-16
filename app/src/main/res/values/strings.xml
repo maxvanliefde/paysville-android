@@ -12,4 +12,8 @@
     <string name="text_players_names">Bienvenue à vous %1$d ! \nComment vous appelez-vous ?</string>
     <string name="text_players_done">C\'est bien noté,\n %1$s !\nOn va pouvoir commencer à jouer !</string>
     <string name="next">Suivant</string>
+    <string name="round">Manche</string>
+    <string name="text_round_number">#%1$d</string>
+    <string name="text_round_ready">Êtes-vous prêt.e.s ?</string>
+    <string name="play_round">Jouer</string>
 </resources>
