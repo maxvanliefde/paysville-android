@@ -21,10 +21,11 @@ import org.jetbrains.annotations.NotNull;
 import be.thefluffypangolin.paysville.GameActivity;
 import be.thefluffypangolin.paysville.GameViewModel;
 import be.thefluffypangolin.paysville.databinding.FragmentGameRoundWithTimerBinding;
+import be.thefluffypangolin.paysville.model.PaysVilleGame;
 
 public class RoundWithTimerFragment extends Fragment {
 
-    private GameViewModel gameModel;
+    private PaysVilleGame game;
     private GameActivity activity;
     private ExtendedFloatingActionButton fab;
     private FragmentGameRoundWithTimerBinding binding;
@@ -35,7 +36,7 @@ public class RoundWithTimerFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        gameModel = new ViewModelProvider(requireActivity()).get(GameViewModel.class);
+        game = new ViewModelProvider(requireActivity()).get(GameViewModel.class).getGame();
         model = new ViewModelProvider(this).get(RoundWithTimerViewModel.class);
         fab = activity.getFAB();
         binding = FragmentGameRoundWithTimerBinding.inflate(inflater, container, false);

@@ -21,10 +21,23 @@
         android:id="@+id/roundNoTimerFragment"
         android:name="be.thefluffypangolin.paysville.ui.game_round.RoundNoTimerFragment"
         android:label="fragment_round_no_timer"
-        tools:layout="@layout/fragment_game_round_no_timer" />
+        tools:layout="@layout/fragment_game_round_no_timer" >
+        <action
+            android:id="@+id/action_roundNoTimer_to_points"
+            app:destination="@id/pointsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/roundWithTimerFragment"
         android:name="be.thefluffypangolin.paysville.ui.game_round.RoundWithTimerFragment"
         android:label="fragment_round_with_timer"
-        tools:layout="@layout/fragment_game_round_with_timer" />
+        tools:layout="@layout/fragment_game_round_with_timer" >
+        <action
+            android:id="@+id/action_roundWithTimer_to_points"
+            app:destination="@id/pointsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/pointsFragment"
+        android:name="be.thefluffypangolin.paysville.ui.game_points.PointsFragment"
+        android:label="fragment_game_points"
+        tools:layout="@layout/fragment_game_points" />
 </navigation>

@@ -2,6 +2,7 @@ package be.thefluffypangolin.paysville;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.HasDefaultViewModelProviderFactory;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
@@ -49,5 +50,9 @@ public class GameActivity extends AppCompatActivity implements HasDefaultViewMod
 
     public ExtendedFloatingActionButton getFAB() {
         return fab;
+    }
+
+    public ConstraintLayout getConstraintLayout() {
+        return binding.contraintLayoutGameActivity;
     }
 }

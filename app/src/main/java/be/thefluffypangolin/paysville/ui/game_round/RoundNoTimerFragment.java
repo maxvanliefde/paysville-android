@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
@@ -21,10 +23,11 @@ import be.thefluffypangolin.paysville.GameActivity;
 import be.thefluffypangolin.paysville.GameViewModel;
 import be.thefluffypangolin.paysville.R;
 import be.thefluffypangolin.paysville.databinding.FragmentGameRoundNoTimerBinding;
+import be.thefluffypangolin.paysville.model.PaysVilleGame;
 
 public class RoundNoTimerFragment extends Fragment {
 
-    private GameViewModel gameModel;
+    private PaysVilleGame game;
     private GameActivity activity;
     private ExtendedFloatingActionButton fab;
     private FragmentGameRoundNoTimerBinding binding;
@@ -33,18 +36,21 @@ public class RoundNoTimerFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        gameModel = new ViewModelProvider(requireActivity()).get(GameViewModel.class);
+        game = new ViewModelProvider(requireActivity()).get(GameViewModel.class).getGame();
         fab = activity.getFAB();
         binding = FragmentGameRoundNoTimerBinding.inflate(inflater, container, false);
         letter = binding.roundLetter;
 
         // lettre de la manche
-        letter.setText(Character.toString(gameModel.getGame().getActualRound().getLetter()));
+        letter.setText(Character.toString(game.getActualRound().getLetter()));
 
         // bouton encodage
         fab.setText(R.string.encode_points);
         fab.setIconResource(R.drawable.ic_edit_24dp);
-        fab.setOnClickListener(v -> Toast.makeText(requireContext(), "suivant", Toast.LENGTH_SHORT).show());
+        fab.setOnClickListener(v -> {
+            NavDirections action = RoundNoTimerFragmentDirections.actionRoundNoTimerToPoints();
+            Navigation.findNavController(activity, R.id.nav_host_fragment_activity_game).navigate(action);
+        });
 
         return binding.getRoot();
     }

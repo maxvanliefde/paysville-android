@@ -18,4 +18,6 @@
     <string name="play_round">Jouer</string>
     <string name="text_round_letter_is">La lettre de la manche est</string>
     <string name="encode_points">Encoder les points</string>
+    <string name="text_game_points">Encodez les points de cette manche.</string>
+    <string name="save">Enregistrer</string>
 </resources>

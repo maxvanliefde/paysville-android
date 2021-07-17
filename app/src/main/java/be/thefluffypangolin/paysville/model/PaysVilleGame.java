@@ -141,7 +141,7 @@ public class PaysVilleGame {
     /**
      * @return les paramètres de la partie
      */
-    public GameParameters getGameParameters() {
+    public GameParameters getParameters() {
         return parameters;
     }
 
@@ -150,6 +150,14 @@ public class PaysVilleGame {
      */
     public List<PaysVilleRound> getRounds() {
         return rounds;
+    }
+
+    public int getNumberOfPlayers() {
+        return numberOfPlayers;
+    }
+
+    public Player[] getPlayers() {
+        return players;
     }
 
     /**
