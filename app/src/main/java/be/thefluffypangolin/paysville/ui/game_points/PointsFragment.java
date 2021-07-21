@@ -1,7 +1,6 @@
 package be.thefluffypangolin.paysville.ui.game_points;
 
 import androidx.appcompat.widget.LinearLayoutCompat;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
@@ -91,17 +90,17 @@ public class PointsFragment extends Fragment {
     }
 
     private void savePointsAndContinue(View v) {
-        boolean error = false;
-        //todo : vérifier s'il y a des champs vides
-        if (error) {
-            Snackbar.make(activity.getConstraintLayout(),
-                    "Vérifiez que vous avez encodé tous les points",
+        try {
+            String[] stringArray = model.getPlayersScores();
+            int[] intArray = Arrays.stream(stringArray).mapToInt(Integer::parseInt).toArray();
+            game.addAllScoresToCurrentRound(intArray);
+            Snackbar.make(activity.getCoordinatorLayout(),
+                    game.getCurrentPoints().toString(),
                     BaseTransientBottomBar.LENGTH_SHORT)
                     .show();
-        } else {
-            // todo : enregistrer les points et naviguer au fragment suivant
-            Snackbar.make(activity.getConstraintLayout(),
-                    Arrays.toString(model.getPlayersScores()),
+        } catch (NumberFormatException e) {
+            Snackbar.make(activity.getCoordinatorLayout(),
+                    "Vérifiez que vous avez correctement encodé tous les points",
                     BaseTransientBottomBar.LENGTH_SHORT)
                     .show();
         }

@@ -3,6 +3,7 @@ package be.thefluffypangolin.paysville;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.lifecycle.HasDefaultViewModelProviderFactory;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
@@ -52,7 +53,7 @@ public class GameActivity extends AppCompatActivity implements HasDefaultViewMod
         return fab;
     }
 
-    public ConstraintLayout getConstraintLayout() {
-        return binding.contraintLayoutGameActivity;
+    public CoordinatorLayout getCoordinatorLayout() {
+        return binding.coordinatorLayoutGameActivity;
     }
 }
