@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -42,7 +41,7 @@ public class RoundNoTimerFragment extends Fragment {
         letter = binding.roundLetter;
 
         // lettre de la manche
-        letter.setText(Character.toString(game.getActualRound().getLetter()));
+        letter.setText(Character.toString(game.getCurrentRound().getLetter()));
 
         // bouton encodage
         fab.setText(R.string.encode_points);

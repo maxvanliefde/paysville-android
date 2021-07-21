@@ -42,7 +42,7 @@ public class LaunchRoundFragment extends Fragment {
 
         // numéro de la manche
         textRoundNumber.setText(String.format(getResources().getString(R.string.text_round_number),
-                game.getActualRoundNumber()));
+                game.getCurrentRoundNumber()));
 
         // bouton lancer
         fab.setText(R.string.play_round);

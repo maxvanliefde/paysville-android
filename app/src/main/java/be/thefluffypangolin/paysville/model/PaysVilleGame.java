@@ -17,7 +17,7 @@ public class PaysVilleGame {
     private final Player[] players;
     private final PaysVilleRoundFactory factory;
     private final List<PaysVilleRound> rounds;
-    private final Map<Player, Integer> actualPoints;
+    private final Map<Player, Integer> currentPoints;
 
     /**
      * Crée une nouvelle partie de Pays-Ville.
@@ -34,8 +34,8 @@ public class PaysVilleGame {
 
         this.factory = new PaysVilleRoundFactory();
         this.rounds = new ArrayList<>();
-        this.actualPoints = new HashMap<>(numberOfPlayers + 1, 1);
-        for (Player p : this.players) this.actualPoints.put(p, 0);
+        this.currentPoints = new HashMap<>(numberOfPlayers + 1, 1);
+        for (Player p : this.players) this.currentPoints.put(p, 0);
     }
 
     /**
@@ -110,7 +110,7 @@ public class PaysVilleGame {
      */
     public class PaysVilleRoundFactory {
         private final List<Character> letters;
-        private int actualIndex;
+        private int currentIndex;
 
         /**
          * Crée une nouvelle Factory, avec un alphabet en ordre aléatoire
@@ -120,7 +120,7 @@ public class PaysVilleGame {
                     .mapToObj(c -> (char) c)
                     .collect(Collectors.toList());
             Collections.shuffle(letters);
-            actualIndex = 0;
+            currentIndex = 0;
         }
 
         /**
@@ -131,7 +131,7 @@ public class PaysVilleGame {
          */
         public PaysVilleRound newRound() throws NoLetterLeftException {
             try {
-                return new PaysVilleRound(letters.get(actualIndex++));
+                return new PaysVilleRound(letters.get(currentIndex++));
             } catch (IndexOutOfBoundsException e) {
                 throw new NoLetterLeftException();
             }
@@ -163,14 +163,14 @@ public class PaysVilleGame {
     /**
      * @return les points actuels, sous la forme d'un mappage entre un joueur et ses points
      */
-    public Map<Player, Integer> getActualPoints() {
-        return actualPoints;
+    public Map<Player, Integer> getCurrentPoints() {
+        return currentPoints;
     }
 
     /**
      * @return la manche actuelle, i.e. la dernière de la liste rounds
      */
-    public PaysVilleRound getActualRound() {
+    public PaysVilleRound getCurrentRound() {
         return rounds.get(rounds.size() - 1);
     }
 
@@ -190,31 +190,41 @@ public class PaysVilleGame {
      * ce qui correspond à la longueur de la liste rounds.
      * @return le numéro de la dernière manche ajoutée
      */
-    public int getActualRoundNumber() {
+    public int getCurrentRoundNumber() {
         return rounds.size();
     }
 
     /**
      * Ajoute le score d'un joueur à la manche actuelle,
-     * et et à jour les points totaux de la partie.
+     * sans mettre à jour les points totaux de la partie.
      * @param player un joueur
      * @param score son score à la manche actuelle
      */
-    public void addScoreToActualRound(Player player, int score) {
-        getActualRound().setScore(player, score);
-        Integer actualScore = getActualPoints().get(player);
-        if (actualScore != null) getActualPoints().put(player, actualScore + score);
+    public void addScoreToCurrentRound(Player player, int score) {
+        getCurrentRound().setScore(player, score);
     }
 
     /**
      * Ajoute les scores de chaque joueur à la manche actuelle,
-     * et met à jour les points totaux de la partie.
+     * sans mettre à jour les points totaux de la partie.
      * Le joueur correspondant à scores[i] doit être players[i].
      * @param scores les scores obtenus par les joueurs {@link #players} à la manche actuelle
      */
-    public void addScoresToActualRound(int[] scores) {
+    public void addAllScoresToCurrentRound(int[] scores) {
         for (int i = 0; i < numberOfPlayers; i++) {
-            addScoreToActualRound(players[i], scores[i]);
+            addScoreToCurrentRound(players[i], scores[i]);
+        }
+    }
+
+    /**
+     * Met à jour les points totaux de la partie en rajoutant ceux de la manche actuelle.
+     */
+    public void updateCurrentPoints() {
+        for (int i = 0; i < numberOfPlayers; i++) {
+            Integer currentPoints = getCurrentPoints().get(players[i]);
+            Integer newScore = getCurrentRound().getScore(players[i]);
+            if (currentPoints != null && newScore != null)
+                getCurrentPoints().put(players[i], currentPoints + newScore);
         }
     }
 
@@ -225,14 +235,14 @@ public class PaysVilleGame {
     public boolean isGameFinished() {
         if (parameters.doGameEndsWithPoints()) {
             for (Player p : players) {
-                Integer points = getActualPoints().get(p);
+                Integer points = getCurrentPoints().get(p);
                 if (points != null && points >= parameters.getPointsGameEnd()) {
                     return true;
                 }
             }
             return false;
         } else {
-            return getActualRoundNumber() == 26;
+            return getCurrentRoundNumber() == 26;
         }
     }
 
@@ -246,7 +256,7 @@ public class PaysVilleGame {
             int max = 0;
             Player winner = players[0];
             for (int i = 0; i < numberOfPlayers; i++) {
-                Integer score = getActualPoints().get(players[i]);
+                Integer score = getCurrentPoints().get(players[i]);
                 if (score != null && score > max)
                     winner = players[i];
             }
