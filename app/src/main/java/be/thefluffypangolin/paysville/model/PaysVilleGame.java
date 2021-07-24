@@ -233,7 +233,8 @@ public class PaysVilleGame {
      * @return vrai si le jeu est terminé, ou faux sinon
      */
     public boolean isGameFinished() {
-        if (parameters.doGameEndsWithPoints()) {
+        if (getCurrentRoundNumber() == 26) return true;
+        else if (parameters.doGameEndsWithPoints()) {
             for (Player p : players) {
                 Integer points = getCurrentPoints().get(p);
                 if (points != null && points >= parameters.getPointsGameEnd()) {
@@ -241,9 +242,8 @@ public class PaysVilleGame {
                 }
             }
             return false;
-        } else {
-            return getCurrentRoundNumber() == 26;
         }
+        else return false;
     }
 
     /**
