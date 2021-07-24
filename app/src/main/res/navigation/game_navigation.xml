@@ -39,5 +39,17 @@
         android:id="@+id/pointsFragment"
         android:name="be.thefluffypangolin.paysville.ui.game_points.PointsFragment"
         android:label="fragment_game_points"
-        tools:layout="@layout/fragment_game_points" />
+        tools:layout="@layout/fragment_game_points" >
+        <action
+            android:id="@+id/action_points_to_verify"
+            app:destination="@id/verifyPointsDialogFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/verifyPointsDialogFragment"
+        android:name="be.thefluffypangolin.paysville.ui.game_points.VerifyPointsDialogFragment"
+        android:label="VerifyPointsDialogFragment">
+        <action
+            android:id="@+id/action_verify_to_launch"
+            app:destination="@id/launchRoundFragment" />
+    </dialog>
 </navigation>

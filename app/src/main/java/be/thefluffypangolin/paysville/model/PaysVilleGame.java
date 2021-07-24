@@ -263,4 +263,18 @@ public class PaysVilleGame {
             return winner;
         }
     }
+
+    public String getPointsEvolution() {
+        StringBuilder s = new StringBuilder();
+        for (int i = 0; i < numberOfPlayers; i++) {
+            Player player = players[i];
+            int actualScore = getCurrentPoints().get(player);
+            int newScore = getCurrentRound().getScore(player);
+            s.append(player.getName()).append(" :\t")
+                    .append(actualScore).append(" + ").append(newScore)
+                    .append(" => ").append(actualScore + newScore)
+                    .append("\n");
+        }
+        return s.toString();
+    }
 }

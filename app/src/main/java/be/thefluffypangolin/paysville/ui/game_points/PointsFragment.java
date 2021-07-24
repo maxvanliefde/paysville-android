@@ -9,6 +9,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 
 import android.text.Editable;
 import android.text.InputType;
@@ -78,7 +80,7 @@ public class PointsFragment extends Fragment {
         // bouton enregistrer
         fab.setText(R.string.save);
         fab.setIconResource(R.drawable.ic_save_24dp);
-        fab.setOnClickListener(this::savePointsAndContinue);
+        fab.setOnClickListener(this::convertPointsAndContinue);
 
         return binding.getRoot();
     }
@@ -89,15 +91,13 @@ public class PointsFragment extends Fragment {
         activity = (GameActivity) context;
     }
 
-    private void savePointsAndContinue(View v) {
+    private void convertPointsAndContinue(View v) {
         try {
             String[] stringArray = model.getPlayersScores();
             int[] intArray = Arrays.stream(stringArray).mapToInt(Integer::parseInt).toArray();
             game.addAllScoresToCurrentRound(intArray);
-            Snackbar.make(activity.getCoordinatorLayout(),
-                    game.getCurrentPoints().toString(),
-                    BaseTransientBottomBar.LENGTH_SHORT)
-                    .show();
+            NavDirections action = PointsFragmentDirections.actionPointsToVerify();
+            Navigation.findNavController(activity, R.id.nav_host_fragment_activity_game).navigate(action);
         } catch (NumberFormatException e) {
             Snackbar.make(activity.getCoordinatorLayout(),
                     "Vérifiez que vous avez correctement encodé tous les points",
