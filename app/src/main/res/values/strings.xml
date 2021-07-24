@@ -20,4 +20,7 @@
     <string name="encode_points">Encoder les points</string>
     <string name="text_game_points">Encodez les points de cette manche.</string>
     <string name="save">Enregistrer</string>
+    <string name="continue_to">Continuer</string>
+    <string name="game_finished">La partie est terminée !</string>
+    <string name="winners">Gagnant.e.s</string>
 </resources>

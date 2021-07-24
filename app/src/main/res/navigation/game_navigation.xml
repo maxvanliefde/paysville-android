@@ -51,5 +51,12 @@
         <action
             android:id="@+id/action_verify_to_launch"
             app:destination="@id/launchRoundFragment" />
+        <action
+            android:id="@+id/action_verify_to_finished"
+            app:destination="@id/finishedFragment" />
     </dialog>
+    <fragment
+        android:id="@+id/finishedFragment"
+        android:name="be.thefluffypangolin.paysville.ui.game_finished.FinishedFragment"
+        android:label="FinishedFragment" />
 </navigation>

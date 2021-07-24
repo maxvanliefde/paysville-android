@@ -49,17 +49,18 @@ public class VerifyPointsDialogFragment extends DialogFragment {
                 game.updateCurrentPoints();
 
                 // vérifie si la partie est finie, sinon relance une manche
+                NavDirections action;
                 if (game.isGameFinished()) {
-                    Snackbar.make(activity.getCoordinatorLayout(), "fini !!!!", BaseTransientBottomBar.LENGTH_SHORT).show();
+                    action = VerifyPointsDialogFragmentDirections.actionVerifyToFinished();
                 } else {
                     try {
                         game.addNewRound();
                     } catch (PaysVilleGame.NoLetterLeftException e) {
                         e.printStackTrace();
                     }
-                    NavDirections action = VerifyPointsDialogFragmentDirections.actionVerifyToLaunch();
-                    Navigation.findNavController(activity, R.id.nav_host_fragment_activity_game).navigate(action);
+                    action = VerifyPointsDialogFragmentDirections.actionVerifyToLaunch();
                 }
+                Navigation.findNavController(activity, R.id.nav_host_fragment_activity_game).navigate(action);
 
             case DialogInterface.BUTTON_NEGATIVE:
                 dialog.dismiss();
