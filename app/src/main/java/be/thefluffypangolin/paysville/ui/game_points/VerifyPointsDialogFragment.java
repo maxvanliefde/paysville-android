@@ -45,17 +45,22 @@ public class VerifyPointsDialogFragment extends DialogFragment {
     private void buttonsListener(DialogInterface dialog, int which) {
         switch (which) {
             case DialogInterface.BUTTON_POSITIVE:
-                // enregistre les points et lance une nouvelle manche
+                // enregistre les points
                 game.updateCurrentPoints();
 
-                try {
-                    game.addNewRound();
-                } catch (PaysVilleGame.NoLetterLeftException e) {
-                    e.printStackTrace();
+                // vérifie si la partie est finie, sinon relance une manche
+                if (game.isGameFinished()) {
+                    Snackbar.make(activity.getCoordinatorLayout(), "fini !!!!", BaseTransientBottomBar.LENGTH_SHORT).show();
+                } else {
+                    try {
+                        game.addNewRound();
+                    } catch (PaysVilleGame.NoLetterLeftException e) {
+                        e.printStackTrace();
+                    }
+                    NavDirections action = VerifyPointsDialogFragmentDirections.actionVerifyToLaunch();
+                    Navigation.findNavController(activity, R.id.nav_host_fragment_activity_game).navigate(action);
                 }
 
-                NavDirections action = VerifyPointsDialogFragmentDirections.actionVerifyToLaunch();
-                Navigation.findNavController(activity, R.id.nav_host_fragment_activity_game).navigate(action);
             case DialogInterface.BUTTON_NEGATIVE:
                 dialog.dismiss();
         }
