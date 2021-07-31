@@ -15,6 +15,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.preference.PreferenceManager;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
@@ -39,14 +41,14 @@ public class HomeFragment extends Fragment {
         ExtendedFloatingActionButton extendedFab = binding.launchGameButton;
 
         final TextView textView = binding.textHome;
-        extendedFab.setOnClickListener(v -> showConfirmationDialog());
+        extendedFab.setOnClickListener(this::showConfirmationDialog);
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
-    private void showConfirmationDialog() {
-        DialogFragment dialog = new LaunchGameDialogFragment();
-        dialog.show(getParentFragmentManager(), "confirmation_dialog");
+    private void showConfirmationDialog(View v) {
+        NavDirections action = HomeFragmentDirections.actionHomeToLaunchDialog();
+        Navigation.findNavController(v).navigate(action);
     }
 
     @Override
