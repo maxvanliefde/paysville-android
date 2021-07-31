@@ -1,5 +1,9 @@
 package be.thefluffypangolin.paysville;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,6 +29,7 @@ public class PlayersChoiceActivity extends AppCompatActivity
 
     public static String KEY_NUMBER_OF_PLAYERS = "NUMBER_OF_PLAYERS_ARG";
     public static String KEY_PLAYERS_NAMES = "PLAYERS_NAMES_ARG";
+    public static ActivityResultLauncher<Intent> startForResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +43,11 @@ public class PlayersChoiceActivity extends AppCompatActivity
         // Récupérer les paramètres
         Intent intent = getIntent();
         gameParameters = intent.getParcelableExtra(MainActivity.KEY_GAME_PARAMETERS);
+
+        // fermer cette activité lors de la fin du jeu
+        startForResult = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                activityResult -> this.finish());
     }
 
     @Override
@@ -52,6 +62,6 @@ public class PlayersChoiceActivity extends AppCompatActivity
                 .putExtra(MainActivity.KEY_GAME_PARAMETERS, gameParameters)
                 .putExtra(KEY_NUMBER_OF_PLAYERS, numberOfPlayers)
                 .putExtra(KEY_PLAYERS_NAMES, playersNames);
-        startActivity(intent);
+        startForResult.launch(intent);
     }
 }
