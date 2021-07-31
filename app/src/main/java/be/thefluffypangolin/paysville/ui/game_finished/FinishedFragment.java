@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
@@ -40,10 +42,8 @@ public class FinishedFragment extends Fragment {
         fab.setIconResource(R.drawable.ic_baseline_navigate_next_24dp);
         fab.setText(R.string.winners);
         fab.setOnClickListener(v -> {
-            Snackbar.make(activity.getCoordinatorLayout(),
-                    game.getWinners() == null ? "oups" : game.getWinners().toString(),
-                    BaseTransientBottomBar.LENGTH_SHORT)
-                    .show();
+            NavDirections action = FinishedFragmentDirections.actionFinishedToWinners();
+            Navigation.findNavController(activity, R.id.nav_host_fragment_activity_game).navigate(action);
         });
         return binding.getRoot();
     }

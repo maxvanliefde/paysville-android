@@ -58,5 +58,13 @@
     <fragment
         android:id="@+id/finishedFragment"
         android:name="be.thefluffypangolin.paysville.ui.game_finished.FinishedFragment"
-        android:label="FinishedFragment" />
+        android:label="FinishedFragment" >
+        <action
+            android:id="@+id/action_finished_to_winners"
+            app:destination="@id/winnersFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/winnersFragment"
+        android:name="be.thefluffypangolin.paysville.ui.game_winners.WinnersFragment"
+        android:label="WinnersFragment" />
 </navigation>

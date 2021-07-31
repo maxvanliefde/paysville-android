@@ -23,4 +23,8 @@
     <string name="continue_to">Continuer</string>
     <string name="game_finished">La partie est terminée !</string>
     <string name="winners">Gagnant.e.s</string>
+    <string name="winners_are">Les gagnant.e.s sont</string>
+    <string name="winner_is">Le gagnant ou la gagnante est</string>
+    <string name="congratulations">Et bravo à tout le monde !</string>
+    <string name="finish">Terminer</string>
 </resources>
