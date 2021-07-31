@@ -41,7 +41,7 @@ public class FinishedFragment extends Fragment {
         fab.setText(R.string.winners);
         fab.setOnClickListener(v -> {
             Snackbar.make(activity.getCoordinatorLayout(),
-                    game.getWinner() == null ? "oups" : game.getWinner().getName(),
+                    game.getWinners() == null ? "oups" : game.getWinners().toString(),
                     BaseTransientBottomBar.LENGTH_SHORT)
                     .show();
         });

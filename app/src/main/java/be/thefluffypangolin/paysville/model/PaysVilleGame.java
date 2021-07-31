@@ -247,20 +247,27 @@ public class PaysVilleGame {
     }
 
     /**
-     * todo vérifier s'il y a plusieurs gagants
-     * @return le gagnant de la partie, ou null si elle n'est pas terminée
+     * Récupère le ou les gagnant.e.s de la partie
+     * @return null si la partie n'est pas terminée,
+     *      ou une liste contenant le ou les gagnant.e.s de la partie sinon
      */
-    public Player getWinner() {
-        if (!isGameFinished()) return null;
+    public List<Player> getWinners() {
+        if (!isGameFinished())
+            return null;
         else {
             int max = 0;
-            Player winner = players[0];
+            List<Player> winners = new ArrayList<>();
             for (int i = 0; i < numberOfPlayers; i++) {
                 Integer score = getCurrentPoints().get(players[i]);
-                if (score != null && score > max)
-                    winner = players[i];
+                if (score != null && score > max) {
+                    max = score;
+                    winners.clear();
+                    winners.add(players[i]);
+                } else if (score != null && score == max) {
+                    winners.add(players[i]);
+                }
             }
-            return winner;
+            return winners;
         }
     }
 
