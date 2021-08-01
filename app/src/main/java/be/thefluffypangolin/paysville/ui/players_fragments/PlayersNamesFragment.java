@@ -3,6 +3,7 @@ package be.thefluffypangolin.paysville.ui.players_fragments;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -68,15 +69,14 @@ public class PlayersNamesFragment extends Fragment {
         // champs pour entrer les prénoms
         for (int i = 0; i < numberOfPlayers; i++) {
             int finalI = i;
-            TextInputLayout textInputLayout = new TextInputLayout(requireContext());
-
+            @SuppressLint("InflateParams")
+            TextInputLayout textInputLayout = (TextInputLayout) LayoutInflater
+                            .from(requireContext())
+                            .inflate(R.layout.layout_text_input_players_names, null);
+            textInputLayout.setId(i + 10000);
             textInputLayout.setHint("Joueur " + (i + 1));
-            final float scale = getResources().getDisplayMetrics().density;
-            int padding_8dp = (int) (5*scale + 0.5f);
-            textInputLayout.setPadding(padding_8dp,padding_8dp,padding_8dp,padding_8dp);
 
             TextInputEditText textInputEditText = new TextInputEditText(textInputLayout.getContext());
-
             textInputEditText.setText(playersNamesViewModel.getPlayersNames()[i]);
             textInputEditText.addTextChangedListener(new TextWatcher() {
                 @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -88,7 +88,7 @@ public class PlayersNamesFragment extends Fragment {
                 }
             });
             textInputEditText.setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS);
-            textInputEditText.setOnFocusChangeListener((v, hasFocus) -> {if (!hasFocus) hideKeyboard(v);});
+
             textInputLayout.addView(textInputEditText);
             linearLayout.addView(textInputLayout, i);
             textInputLayouts.add(textInputLayout);

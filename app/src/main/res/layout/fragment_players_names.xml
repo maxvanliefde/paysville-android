@@ -2,28 +2,24 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinator_players_names"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.players_fragments.PlayersNamesFragment"
-    android:id="@+id/coordinator_players_names"
-    >
+    tools:context=".ui.players_fragments.PlayersNamesFragment">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:gravity="center"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:clickable="true">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/text_players_names"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:layout_margin="@dimen/activity_horizontal_margin"
             android:textAlignment="center"
-            android:layout_margin="@dimen/activity_horizontal_margin" />
+            android:textSize="20sp" />
 
         <ScrollView
             android:id="@+id/scroll_view_players_names"
@@ -34,9 +30,9 @@
                 android:id="@+id/layout_players_names"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:paddingStart="64dp"
-                android:paddingEnd="64dp"
-                android:orientation="vertical" />
+                android:paddingEnd="64dp" />
 
         </ScrollView>
 
@@ -50,11 +46,11 @@
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:clickable="true"
+        android:contentDescription="@string/next"
         android:focusable="true"
         android:src="@drawable/ic_baseline_navigate_next_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:contentDescription="@string/next"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
