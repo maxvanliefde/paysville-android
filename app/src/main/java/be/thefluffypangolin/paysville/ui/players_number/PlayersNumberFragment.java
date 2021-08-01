@@ -41,7 +41,7 @@ public class PlayersNumberFragment extends Fragment {
 
         playersNumberViewModel.getNumberOfPlayers().observe(getViewLifecycleOwner(), picker::setValue);
 
-        picker.setMinValue(1);
+        picker.setMinValue(2);
         picker.setMaxValue(10);
         picker.setOnValueChangedListener
                 ((picker, oldVal, newVal) -> playersNumberViewModel.getNumberOfPlayers().setValue(newVal));
