@@ -1,19 +1,15 @@
-package be.thefluffypangolin.paysville.ui.home;
+package be.thefluffypangolin.paysville.ui.main_home;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import androidx.preference.PreferenceManager;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Objects;
 
 import be.thefluffypangolin.paysville.R;
 import be.thefluffypangolin.paysville.model.GameParameters;
@@ -60,7 +56,7 @@ public class LaunchGameDialogFragment extends DialogFragment {
                             + parameters.toString())
                     .setPositiveButton(R.string.launch_game_text_ok,
                             (dialog, which) -> listener.onDialogLaunchClick(LaunchGameDialogFragment.this, parameters))
-                    .setNegativeButton(R.string.modify_parameters,
+                    .setNegativeButton(R.string.modify_settings,
                             (dialog, which) -> listener.onDialogModifyClick(LaunchGameDialogFragment.this));
         } catch (GameParameters.GameNotReadyException e) {
             // un ou plusieurs paramètres incorrects

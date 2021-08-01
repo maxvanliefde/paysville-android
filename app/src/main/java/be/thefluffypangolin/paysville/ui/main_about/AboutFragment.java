@@ -1,4 +1,4 @@
-package be.thefluffypangolin.paysville.ui.about;
+package be.thefluffypangolin.paysville.ui.main_about;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,24 +7,22 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import be.thefluffypangolin.paysville.databinding.FragmentAboutBinding;
+import be.thefluffypangolin.paysville.databinding.FragmentMainAboutBinding;
 
 public class AboutFragment extends Fragment {
 
     private AboutViewModel aboutViewModel;
-    private FragmentAboutBinding binding;
+    private FragmentMainAboutBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         aboutViewModel =
                 new ViewModelProvider(this).get(AboutViewModel.class);
 
-        binding = FragmentAboutBinding.inflate(inflater, container, false);
+        binding = FragmentMainAboutBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textAbout;

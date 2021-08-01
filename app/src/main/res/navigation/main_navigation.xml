@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="be.thefluffypangolin.paysville.ui.home.HomeFragment"
+        android:name="be.thefluffypangolin.paysville.ui.main_home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_main_home" >
         <action
             android:id="@+id/action_home_to_launchDialog"
             app:destination="@id/launchGameDialogFragment" />
@@ -17,18 +17,18 @@
 
     <fragment
         android:id="@+id/navigation_settings"
-        android:name="be.thefluffypangolin.paysville.ui.settings.SettingsFragment"
+        android:name="be.thefluffypangolin.paysville.ui.main_settings.SettingsFragment"
         android:label="@string/title_settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_main_settings" />
 
     <fragment
         android:id="@+id/navigation_about"
-        android:name="be.thefluffypangolin.paysville.ui.about.AboutFragment"
+        android:name="be.thefluffypangolin.paysville.ui.main_about.AboutFragment"
         android:label="@string/title_about"
-        tools:layout="@layout/fragment_about" />
+        tools:layout="@layout/fragment_main_about" />
 
     <dialog
         android:id="@+id/launchGameDialogFragment"
-        android:name="be.thefluffypangolin.paysville.ui.home.LaunchGameDialogFragment"
+        android:name="be.thefluffypangolin.paysville.ui.main_home.LaunchGameDialogFragment"
         android:label="LaunchGameDialogFragment" />
 </navigation>

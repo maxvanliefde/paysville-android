@@ -2,7 +2,6 @@ package be.thefluffypangolin.paysville;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
@@ -11,18 +10,15 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.preference.PreferenceManager;
 
 import java.util.Set;
 
 import be.thefluffypangolin.paysville.databinding.ActivityMainBinding;
 import be.thefluffypangolin.paysville.model.GameParameters;
-import be.thefluffypangolin.paysville.ui.home.LaunchGameDialogFragment;
-import be.thefluffypangolin.paysville.ui.settings.SettingsFragment;
+import be.thefluffypangolin.paysville.ui.main_home.LaunchGameDialogFragment;
 
 public class MainActivity extends AppCompatActivity implements LaunchGameDialogFragment.LaunchGameDialogListener {
 
