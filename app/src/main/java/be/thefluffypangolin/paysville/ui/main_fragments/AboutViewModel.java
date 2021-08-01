@@ -1,4 +1,4 @@
-package be.thefluffypangolin.paysville.ui.main_about;
+package be.thefluffypangolin.paysville.ui.main_fragments;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

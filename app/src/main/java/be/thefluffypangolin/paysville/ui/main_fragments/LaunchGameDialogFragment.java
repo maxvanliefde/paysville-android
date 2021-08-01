@@ -1,4 +1,4 @@
-package be.thefluffypangolin.paysville.ui.main_home;
+package be.thefluffypangolin.paysville.ui.main_fragments;
 
 import android.app.Dialog;
 import android.content.Context;

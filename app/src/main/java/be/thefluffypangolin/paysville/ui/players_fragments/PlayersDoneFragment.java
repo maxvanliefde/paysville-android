@@ -1,4 +1,4 @@
-package be.thefluffypangolin.paysville.ui.players_done;
+package be.thefluffypangolin.paysville.ui.players_fragments;
 
 import android.content.Context;
 import android.os.Bundle;

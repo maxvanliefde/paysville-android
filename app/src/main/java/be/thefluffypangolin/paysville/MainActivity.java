@@ -18,7 +18,7 @@ import java.util.Set;
 
 import be.thefluffypangolin.paysville.databinding.ActivityMainBinding;
 import be.thefluffypangolin.paysville.model.GameParameters;
-import be.thefluffypangolin.paysville.ui.main_home.LaunchGameDialogFragment;
+import be.thefluffypangolin.paysville.ui.main_fragments.LaunchGameDialogFragment;
 
 public class MainActivity extends AppCompatActivity implements LaunchGameDialogFragment.LaunchGameDialogListener {
 

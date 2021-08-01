@@ -1,4 +1,4 @@
-package be.thefluffypangolin.paysville.ui.players_names;
+package be.thefluffypangolin.paysville.ui.players_fragments;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;

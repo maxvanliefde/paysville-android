@@ -1,4 +1,4 @@
-package be.thefluffypangolin.paysville.ui.game_points;
+package be.thefluffypangolin.paysville.ui.game_fragments;
 
 import androidx.lifecycle.ViewModel;
 

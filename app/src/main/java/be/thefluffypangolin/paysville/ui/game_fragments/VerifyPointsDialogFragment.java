@@ -1,4 +1,4 @@
-package be.thefluffypangolin.paysville.ui.game_points;
+package be.thefluffypangolin.paysville.ui.game_fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -22,6 +22,7 @@ import be.thefluffypangolin.paysville.GameActivity;
 import be.thefluffypangolin.paysville.GameViewModel;
 import be.thefluffypangolin.paysville.R;
 import be.thefluffypangolin.paysville.model.PaysVilleGame;
+import be.thefluffypangolin.paysville.ui.game_fragments.VerifyPointsDialogFragmentDirections;
 
 public class VerifyPointsDialogFragment extends DialogFragment {
 

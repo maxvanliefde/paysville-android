@@ -1,7 +1,5 @@
 package be.thefluffypangolin.paysville;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.ActionBar;
@@ -9,14 +7,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.NumberPicker;
-import android.widget.Toast;
-
-import java.util.Arrays;
 
 import be.thefluffypangolin.paysville.databinding.ActivityPlayersChoiceBinding;
 import be.thefluffypangolin.paysville.model.GameParameters;
-import be.thefluffypangolin.paysville.ui.players_done.PlayersDoneFragment;
+import be.thefluffypangolin.paysville.ui.players_fragments.PlayersDoneFragment;
 
 public class PlayersChoiceActivity extends AppCompatActivity
         implements PlayersDoneFragment.FABClicked {

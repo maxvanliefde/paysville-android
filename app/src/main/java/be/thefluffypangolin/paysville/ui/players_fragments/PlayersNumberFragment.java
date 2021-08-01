@@ -1,6 +1,5 @@
-package be.thefluffypangolin.paysville.ui.players_number;
+package be.thefluffypangolin.paysville.ui.players_fragments;
 
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;

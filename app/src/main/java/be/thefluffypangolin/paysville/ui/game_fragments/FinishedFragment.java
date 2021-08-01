@@ -1,4 +1,4 @@
-package be.thefluffypangolin.paysville.ui.game_finished;
+package be.thefluffypangolin.paysville.ui.game_fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -23,7 +23,6 @@ import be.thefluffypangolin.paysville.GameActivity;
 import be.thefluffypangolin.paysville.GameViewModel;
 import be.thefluffypangolin.paysville.R;
 import be.thefluffypangolin.paysville.databinding.FragmentGameFinishedBinding;
-import be.thefluffypangolin.paysville.databinding.FragmentGamePointsBinding;
 import be.thefluffypangolin.paysville.model.PaysVilleGame;
 
 public class FinishedFragment extends Fragment {

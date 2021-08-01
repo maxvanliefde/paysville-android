@@ -1,4 +1,4 @@
-package be.thefluffypangolin.paysville.ui.main_settings;
+package be.thefluffypangolin.paysville.ui.main_fragments;
 
 import android.os.Bundle;
 import android.text.InputType;

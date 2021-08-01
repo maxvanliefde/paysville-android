@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/launchRoundFragment"
-        android:name="be.thefluffypangolin.paysville.ui.game_launch_round.LaunchRoundFragment"
+        android:name="be.thefluffypangolin.paysville.ui.game_fragments.LaunchRoundFragment"
         android:label="fragment_game_launch_round"
         tools:layout="@layout/fragment_game_launch_round">
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/roundNoTimerFragment"
-        android:name="be.thefluffypangolin.paysville.ui.game_round.RoundNoTimerFragment"
+        android:name="be.thefluffypangolin.paysville.ui.game_fragments.RoundNoTimerFragment"
         android:label="fragment_round_no_timer"
         tools:layout="@layout/fragment_game_round_no_timer" >
         <action
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/roundWithTimerFragment"
-        android:name="be.thefluffypangolin.paysville.ui.game_round.RoundWithTimerFragment"
+        android:name="be.thefluffypangolin.paysville.ui.game_fragments.RoundWithTimerFragment"
         android:label="fragment_round_with_timer"
         tools:layout="@layout/fragment_game_round_with_timer" >
         <action
@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/pointsFragment"
-        android:name="be.thefluffypangolin.paysville.ui.game_points.PointsFragment"
+        android:name="be.thefluffypangolin.paysville.ui.game_fragments.PointsFragment"
         android:label="fragment_game_points"
         tools:layout="@layout/fragment_game_points" >
         <action
@@ -46,7 +46,7 @@
     </fragment>
     <dialog
         android:id="@+id/verifyPointsDialogFragment"
-        android:name="be.thefluffypangolin.paysville.ui.game_points.VerifyPointsDialogFragment"
+        android:name="be.thefluffypangolin.paysville.ui.game_fragments.VerifyPointsDialogFragment"
         android:label="VerifyPointsDialogFragment">
         <action
             android:id="@+id/action_verify_to_launch"
@@ -57,7 +57,7 @@
     </dialog>
     <fragment
         android:id="@+id/finishedFragment"
-        android:name="be.thefluffypangolin.paysville.ui.game_finished.FinishedFragment"
+        android:name="be.thefluffypangolin.paysville.ui.game_fragments.FinishedFragment"
         android:label="FinishedFragment" >
         <action
             android:id="@+id/action_finished_to_winners"
@@ -65,6 +65,6 @@
     </fragment>
     <fragment
         android:id="@+id/winnersFragment"
-        android:name="be.thefluffypangolin.paysville.ui.game_winners.WinnersFragment"
+        android:name="be.thefluffypangolin.paysville.ui.game_fragments.WinnersFragment"
         android:label="WinnersFragment" />
 </navigation>

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/playersNumberFragment"
-        android:name="be.thefluffypangolin.paysville.ui.players_number.PlayersNumberFragment"
+        android:name="be.thefluffypangolin.paysville.ui.players_fragments.PlayersNumberFragment"
         android:label="players_number_fragment"
         tools:layout="@layout/fragment_players_number" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/playersNamesFragment"
-        android:name="be.thefluffypangolin.paysville.ui.players_names.PlayersNamesFragment"
+        android:name="be.thefluffypangolin.paysville.ui.players_fragments.PlayersNamesFragment"
         android:label="fragment_players_names"
         tools:layout="@layout/fragment_players_names" >
         <action
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/playersDoneFragment"
-        android:name="be.thefluffypangolin.paysville.ui.players_done.PlayersDoneFragment"
+        android:name="be.thefluffypangolin.paysville.ui.players_fragments.PlayersDoneFragment"
         android:label="fragment_players_done"
         tools:layout="@layout/fragment_players_done" >
         <argument

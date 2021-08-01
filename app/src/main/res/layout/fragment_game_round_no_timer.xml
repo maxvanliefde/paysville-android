@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.game_round.RoundNoTimerFragment"
+    tools:context=".ui.game_fragments.RoundNoTimerFragment"
     android:layout_margin="@dimen/activity_horizontal_margin">
 
     <TextView
