@@ -28,22 +28,14 @@ import be.thefluffypangolin.paysville.ui.settings.SettingsFragment;
 
 public class HomeFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
-
         binding = FragmentHomeBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
         ExtendedFloatingActionButton extendedFab = binding.launchGameButton;
-
-        final TextView textView = binding.textHome;
         extendedFab.setOnClickListener(this::showConfirmationDialog);
-        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-        return root;
+        return binding.getRoot();
     }
 
     private void showConfirmationDialog(View v) {
