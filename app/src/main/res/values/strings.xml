@@ -7,6 +7,7 @@
     <string name="title_about_bottom">À propos</string>
     <string name="title_about">À propos de cette application</string>
     <string name="launch_game_text">Lancer le jeu</string>
+    <string name="launch_game_text_ok">OK, lancer le jeu</string>
     <string name="text_home_fragment">Que diriez-vous d\'une petite partie ?</string>
     <string name="text_players_number">Combien de joueurs êtes-vous ?</string>
     <string name="text_players_names">Bienvenue à vous %1$d ! \nComment vous appelez-vous ?</string>

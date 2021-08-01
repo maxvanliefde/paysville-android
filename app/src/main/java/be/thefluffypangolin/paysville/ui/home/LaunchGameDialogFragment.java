@@ -15,6 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
+import be.thefluffypangolin.paysville.R;
 import be.thefluffypangolin.paysville.model.GameParameters;
 
 /**
@@ -57,7 +58,7 @@ public class LaunchGameDialogFragment extends DialogFragment {
             builder.setTitle("Avant de démarrer...")
                     .setMessage("Voici les paramètres du jeu, il est encore temps de les modifier si vous le souhaitez !\n\n"
                             + parameters.toString())
-                    .setPositiveButton("Démarrer la partie",
+                    .setPositiveButton(R.string.launch_game_text_ok,
                             (dialog, which) -> listener.onDialogLaunchClick(LaunchGameDialogFragment.this, parameters))
                     .setNegativeButton("Modifier les paramètres",
                             (dialog, which) -> listener.onDialogModifyClick(LaunchGameDialogFragment.this));
