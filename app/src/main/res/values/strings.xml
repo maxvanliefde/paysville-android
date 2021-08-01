@@ -1,5 +1,9 @@
 <resources>
+    <!-- Global -->
     <string name="app_name">Pays-Ville</string>
+    <string name="next">Suivant</string>
+
+    <!-- Main Activity -->
     <string name="title_home_bottom">Jouer</string>
     <string name="title_home">Jouer au Pays-Ville</string>
     <string name="title_settings_bottom">Paramètres</string>
@@ -7,12 +11,19 @@
     <string name="title_about_bottom">À propos</string>
     <string name="title_about">À propos de cette application</string>
     <string name="launch_game_text">Lancer le jeu</string>
-    <string name="launch_game_text_ok">OK, lancer le jeu</string>
+    
     <string name="text_home_fragment">Que diriez-vous d\'une petite partie ?</string>
+
+    <string name="before_start">Avant de démarrer…</string>
+    <string name="launch_game_text_ok">OK, lancer le jeu</string>
+    <string name="modify_parameters">Modifier les paramètres</string>
+
+    <!-- Players Choice Activity -->
     <string name="text_players_number">Combien de joueurs êtes-vous ?</string>
     <string name="text_players_names">Bienvenue à vous %1$d ! \nComment vous appelez-vous ?</string>
     <string name="text_players_done">C\'est bien noté,\n %1$s !\nOn va pouvoir commencer à jouer !</string>
-    <string name="next">Suivant</string>
+
+    <!-- Game Activity -->
     <string name="round">Manche</string>
     <string name="text_round_number">#%1$d</string>
     <string name="text_round_ready">Êtes-vous prêt.e.s ?</string>

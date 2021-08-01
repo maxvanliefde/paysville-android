@@ -55,12 +55,12 @@ public class LaunchGameDialogFragment extends DialogFragment {
 
         try {
             GameParameters parameters = getGameParameters();
-            builder.setTitle("Avant de démarrer...")
+            builder.setTitle(R.string.before_start)
                     .setMessage("Voici les paramètres du jeu, il est encore temps de les modifier si vous le souhaitez !\n\n"
                             + parameters.toString())
                     .setPositiveButton(R.string.launch_game_text_ok,
                             (dialog, which) -> listener.onDialogLaunchClick(LaunchGameDialogFragment.this, parameters))
-                    .setNegativeButton("Modifier les paramètres",
+                    .setNegativeButton(R.string.modify_parameters,
                             (dialog, which) -> listener.onDialogModifyClick(LaunchGameDialogFragment.this));
         } catch (GameParameters.GameNotReadyException e) {
             // un ou plusieurs paramètres incorrects
