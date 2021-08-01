@@ -16,7 +16,7 @@
 
     <string name="before_start">Avant de démarrer…</string>
     <string name="launch_game_text_ok">OK, lancer le jeu</string>
-    <string name="modify_parameters">Modifier les paramètres</string>
+    <string name="modify_settings">Modifier les paramètres</string>
 
     <!-- Players Choice Activity -->
     <string name="text_players_number">Combien de joueurs êtes-vous ?</string>
