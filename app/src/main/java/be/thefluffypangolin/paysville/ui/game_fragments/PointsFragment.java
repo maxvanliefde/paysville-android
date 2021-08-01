@@ -3,6 +3,7 @@ package be.thefluffypangolin.paysville.ui.game_fragments;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -59,8 +60,12 @@ public class PointsFragment extends Fragment {
         for (int i = 0; i < numberOfPlayers; i++) {
             int finalI = i;
 
-            TextInputLayout textInputLayout = new TextInputLayout(requireContext());
+            @SuppressLint("InflateParams")
+            TextInputLayout textInputLayout = (TextInputLayout) LayoutInflater
+                    .from(requireContext())
+                    .inflate(R.layout.layout_text_input_scores, null);
             textInputLayout.setHint(game.getPlayers()[i].getName());
+            textInputLayout.setId(i + 20000);
 
             TextInputEditText textInputEditText = new TextInputEditText(textInputLayout.getContext());
             textInputEditText.setText(model.getPlayersScores()[i]);
@@ -73,6 +78,7 @@ public class PointsFragment extends Fragment {
                 }
             });
             textInputEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
+
             textInputLayout.addView(textInputEditText);
             layout.addView(textInputLayout, i);
         }

@@ -24,8 +24,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingStart="150dp"
-            android:paddingEnd="150dp" />
+            android:paddingStart="130dp"
+            android:paddingEnd="130dp" />
 
     </ScrollView>
 
