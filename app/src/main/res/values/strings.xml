@@ -37,9 +37,9 @@
     <string name="continue_to">Continuer</string>
     <string name="game_finished">La partie est terminée !</string>
     <string name="winners">Gagnant.e.s</string>
-    <string name="winners_are">Les gagnant.e.s sont</string>
-    <string name="winner_is">Le gagnant ou la gagnante est</string>
-    <string name="congratulations">Et bravo à tout le monde !</string>
+    <string name="winners_are">La partie a été remportée ex-aequo par</string>
+    <string name="winner_is">La partie a été remportée par</string>
+    <string name="congratulations">Bravo à tout le monde !</string>
     <string name="finish">Terminer</string>
 
     <string name="leave_game_title">Vous vous apprêtez à quitter la partie !</string>
