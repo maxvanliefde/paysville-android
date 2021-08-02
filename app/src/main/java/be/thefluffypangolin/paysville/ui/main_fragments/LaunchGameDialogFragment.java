@@ -9,6 +9,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import androidx.preference.PreferenceManager;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
 import org.jetbrains.annotations.NotNull;
 
 import be.thefluffypangolin.paysville.R;
@@ -47,8 +49,7 @@ public class LaunchGameDialogFragment extends DialogFragment {
     @NotNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
         try {
             GameParameters parameters = getGameParameters();
             builder.setTitle(R.string.before_start)
