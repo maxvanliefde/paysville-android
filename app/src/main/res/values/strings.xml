@@ -2,6 +2,8 @@
     <!-- Global -->
     <string name="app_name">Pays-Ville</string>
     <string name="next">Suivant</string>
+    <string name="cancel">Annuler</string>
+    <string name="leave">Quitter</string>
 
     <!-- Main Activity -->
     <string name="title_home_bottom">Jouer</string>
@@ -39,4 +41,7 @@
     <string name="winner_is">Le gagnant ou la gagnante est</string>
     <string name="congratulations">Et bravo à tout le monde !</string>
     <string name="finish">Terminer</string>
+
+    <string name="leave_game_title">Vous vous apprêtez à quitter la partie !</string>
+    <string name="leave_game_msg">Souhaitez-vous continuer ? Vous perdrez la partie en cours.</string>
 </resources>

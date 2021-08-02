@@ -9,11 +9,13 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -47,6 +49,16 @@ public class GameActivity extends AppCompatActivity implements HasDefaultViewMod
 
         // initialisation du jeu, s'il n'existe pas encore
         model.init(parameters, numberOfPlayers, playersNames);
+    }
+
+    @Override
+    public void onBackPressed() {
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
+        builder.setTitle(R.string.leave_game_title)
+                .setMessage(R.string.leave_game_msg)
+                .setPositiveButton(R.string.leave, (dialog, which) -> super.onBackPressed())
+                .setNegativeButton(R.string.cancel, (dialog, which) -> dialog.dismiss());
+        builder.create().show();
     }
 
     public ExtendedFloatingActionButton getFAB() {
