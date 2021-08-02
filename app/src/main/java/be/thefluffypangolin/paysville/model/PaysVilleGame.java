@@ -103,6 +103,14 @@ public class PaysVilleGame {
                     return time;
             }
         }
+
+        /**
+         * Double les points encodés de chaque joueur.
+         */
+        public void doubleScores() {
+            for (int i = 0; i < numberOfPlayers; i++)
+                setScore(players[i], 2*getScore(players[i]));
+        }
     }
 
     /**

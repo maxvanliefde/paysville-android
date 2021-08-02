@@ -36,10 +36,10 @@ public class VerifyPointsDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
 
-        builder.setTitle("Un petit point sur les scores !")
+        builder.setTitle(R.string.verify_points_title)
                 .setMessage(game.getPointsEvolution())
-                .setPositiveButton("OK", this::buttonsListener)
-                .setNegativeButton("Modifier", this::buttonsListener);
+                .setPositiveButton(R.string.ok, this::buttonsListener)
+                .setNegativeButton(R.string.modify, this::buttonsListener);
 
         return builder.create();
     }
@@ -47,6 +47,15 @@ public class VerifyPointsDialogFragment extends DialogFragment {
     private void buttonsListener(DialogInterface dialog, int which) {
         switch (which) {
             case DialogInterface.BUTTON_POSITIVE:
+                // paramètre compte double
+                if (game.getParameters().randomBoolean()) {
+                    game.getCurrentRound().doubleScores();
+                    Snackbar.make(activity.getCoordinatorLayout(),
+                            R.string.plot_twist_double_points,
+                            BaseTransientBottomBar.LENGTH_LONG)
+                            .show();
+                }
+
                 // enregistre les points
                 game.updateCurrentPoints();
 

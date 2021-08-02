@@ -4,6 +4,8 @@
     <string name="next">Suivant</string>
     <string name="cancel">Annuler</string>
     <string name="leave">Quitter</string>
+    <string name="ok">OK</string>
+    <string name="modify">Modifier</string>
 
     <!-- Main Activity -->
     <string name="title_home_bottom">Jouer</string>
@@ -35,6 +37,10 @@
     <string name="text_game_points">Encodez les points de cette manche.</string>
     <string name="save">Enregistrer</string>
     <string name="continue_to">Continuer</string>
+
+    <string name="verify_points_title">"Un petit point sur les scores !"</string>
+    <string name="plot_twist_double_points">Plot twist ! Cette manche a compté double pour chaque joueur !</string>
+
     <string name="game_finished">La partie est terminée !</string>
     <string name="winners">Gagnant.e.s</string>
     <string name="winners_are">La partie a été remportée ex-aequo par</string>
