@@ -21,7 +21,7 @@
         android:id="@+id/roundNoTimerFragment"
         android:name="be.thefluffypangolin.paysville.ui.game_fragments.RoundNoTimerFragment"
         android:label="fragment_round_no_timer"
-        tools:layout="@layout/fragment_game_round_no_timer" >
+        tools:layout="@layout/fragment_game_round_no_timer">
         <action
             android:id="@+id/action_roundNoTimer_to_points"
             app:destination="@id/pointsFragment" />
@@ -30,7 +30,7 @@
         android:id="@+id/roundWithTimerFragment"
         android:name="be.thefluffypangolin.paysville.ui.game_fragments.RoundWithTimerFragment"
         android:label="fragment_round_with_timer"
-        tools:layout="@layout/fragment_game_round_with_timer" >
+        tools:layout="@layout/fragment_game_round_with_timer">
         <action
             android:id="@+id/action_roundWithTimer_to_points"
             app:destination="@id/pointsFragment" />
@@ -39,7 +39,7 @@
         android:id="@+id/pointsFragment"
         android:name="be.thefluffypangolin.paysville.ui.game_fragments.PointsFragment"
         android:label="fragment_game_points"
-        tools:layout="@layout/fragment_game_points" >
+        tools:layout="@layout/fragment_game_points">
         <action
             android:id="@+id/action_points_to_verify"
             app:destination="@id/verifyPointsDialogFragment" />
@@ -50,7 +50,9 @@
         android:label="VerifyPointsDialogFragment">
         <action
             android:id="@+id/action_verify_to_launch"
-            app:destination="@id/launchRoundFragment" />
+            app:destination="@id/launchRoundFragment"
+            app:popUpTo="@id/launchRoundFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_verify_to_finished"
             app:destination="@id/finishedFragment" />
@@ -58,7 +60,7 @@
     <fragment
         android:id="@+id/finishedFragment"
         android:name="be.thefluffypangolin.paysville.ui.game_fragments.FinishedFragment"
-        android:label="FinishedFragment" >
+        android:label="FinishedFragment">
         <action
             android:id="@+id/action_finished_to_winners"
             app:destination="@id/winnersFragment" />
