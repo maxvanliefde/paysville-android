@@ -1,29 +1,19 @@
 package be.thefluffypangolin.paysville;
 
-import androidx.annotation.NonNull;
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.lifecycle.HasDefaultViewModelProviderFactory;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import org.jetbrains.annotations.NotNull;
 
 import be.thefluffypangolin.paysville.databinding.ActivityGameBinding;
 import be.thefluffypangolin.paysville.model.GameParameters;
-import be.thefluffypangolin.paysville.model.PaysVilleGame;
 
 public class GameActivity extends AppCompatActivity implements HasDefaultViewModelProviderFactory {
 
@@ -47,18 +37,22 @@ public class GameActivity extends AppCompatActivity implements HasDefaultViewMod
         int numberOfPlayers = intent.getIntExtra(PlayersChoiceActivity.KEY_NUMBER_OF_PLAYERS, -1);
         String[] playersNames = intent.getStringArrayExtra(PlayersChoiceActivity.KEY_PLAYERS_NAMES);
 
+        // gérer le bouton Back
+        GameActivity activity = this;
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(activity);
+                builder.setTitle(R.string.leave_game_title)
+                        .setMessage(R.string.leave_game_msg)
+                        .setPositiveButton(R.string.leave, (dialog, which) -> activity.finish())
+                        .setNegativeButton(R.string.cancel, (dialog, which) -> dialog.dismiss());
+                builder.create().show();
+            }
+        });
+
         // initialisation du jeu, s'il n'existe pas encore
         model.init(parameters, numberOfPlayers, playersNames);
-    }
-
-    @Override
-    public void onBackPressed() {
-        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
-        builder.setTitle(R.string.leave_game_title)
-                .setMessage(R.string.leave_game_msg)
-                .setPositiveButton(R.string.leave, (dialog, which) -> super.onBackPressed())
-                .setNegativeButton(R.string.cancel, (dialog, which) -> dialog.dismiss());
-        builder.create().show();
     }
 
     public ExtendedFloatingActionButton getFAB() {
