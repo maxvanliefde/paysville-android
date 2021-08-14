@@ -45,13 +45,15 @@ public class RoundWithTimerFragment extends Fragment {
         fab = activity.getFAB();
         binding = FragmentGameRoundWithTimerBinding.inflate(inflater, container, false);
 
+        // gestion du timer et de la ProgressBar
+        int timerDuration = game.getCurrentRound().getTimerDuration();
         progressBar = binding.progressBarTimer;
-        progressBar.setMax(game.getParameters().getTimerDuration());
+        progressBar.setMax(timerDuration);
         progressBar.setProgressCompat(progressBar.getMax(), false);
-
         if (!model.isTimerLaunched())
-            setAndLaunchNewTimer();
+            setAndLaunchNewTimer(timerDuration);
 
+        // gestion du texte et du FAB
         final Observer<Boolean> booleanObserver = new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean timerFinished) {
@@ -73,6 +75,7 @@ public class RoundWithTimerFragment extends Fragment {
         };
         model.isTimerFinished().observe(requireActivity(), booleanObserver);
 
+        // gestion de l'avancement de la ProgressBar
         final Observer<Integer> integerObserver = i -> progressBar.setProgressCompat(i, true);
         model.getRemainingSeconds().observe(requireActivity(), integerObserver);
 
@@ -85,8 +88,8 @@ public class RoundWithTimerFragment extends Fragment {
         activity = (GameActivity) context;
     }
 
-    private void setAndLaunchNewTimer() {
-        model.setTimer(new CountDownTimer(game.getParameters().getTimerDuration() * 1000L, 1000) {
+    private void setAndLaunchNewTimer(int duration) {
+        model.setTimer(new CountDownTimer(duration * 1000L, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 model.getRemainingSeconds().setValue((int) millisUntilFinished / 1000);
@@ -96,9 +99,8 @@ public class RoundWithTimerFragment extends Fragment {
             public void onFinish() {
                 model.isTimerFinished().setValue(true);
             }
-        });
+        }.start());
         model.setTimerLaunchedTrue();
-        model.getTimer().start();
     }
 
     private void customizeFAB() {
