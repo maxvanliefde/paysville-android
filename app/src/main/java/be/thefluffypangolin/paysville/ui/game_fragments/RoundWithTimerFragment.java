@@ -1,5 +1,6 @@
 package be.thefluffypangolin.paysville.ui.game_fragments;
 
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
@@ -43,28 +44,37 @@ public class RoundWithTimerFragment extends Fragment {
         model = new ViewModelProvider(this).get(RoundWithTimerViewModel.class);
         fab = activity.getFAB();
         binding = FragmentGameRoundWithTimerBinding.inflate(inflater, container, false);
-        progressBar = binding.progressBarTimer;
 
-        // gestion du texte et du timer
-        if (!model.isTimerLaunched()){
-            setNewTimer();
-            setTextLetter();
-            fab.hide(new ExtendedFloatingActionButton.OnChangedCallback() {
-                @Override
-                public void onHidden(ExtendedFloatingActionButton extendedFab) {
-                    super.onHidden(extendedFab);
+        progressBar = binding.progressBarTimer;
+        progressBar.setMax(game.getParameters().getTimerDuration());
+        progressBar.setProgressCompat(progressBar.getMax(), false);
+
+        if (!model.isTimerLaunched())
+            setAndLaunchNewTimer();
+
+        final Observer<Boolean> booleanObserver = new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean timerFinished) {
+                if (!timerFinished) {
+                    setTextLetter();
+                    fab.hide(new ExtendedFloatingActionButton.OnChangedCallback() {
+                        @Override
+                        public void onHidden(ExtendedFloatingActionButton extendedFab) {
+                            super.onHidden(extendedFab);
+                            customizeFAB();
+                        }
+                    });
+                } else {
+                    setTextTimerFinished();
                     customizeFAB();
+                    fab.show();
                 }
-            });
-            launchTimer();
-        }
-        if (!model.isTimerFinished()){
-            setTextLetter();
-            customizeFAB();
-        } else {
-            setTextTimerFinished();
-            customizeFAB();
-        }
+            }
+        };
+        model.isTimerFinished().observe(requireActivity(), booleanObserver);
+
+        final Observer<Integer> integerObserver = i -> progressBar.setProgressCompat(i, true);
+        model.getRemainingSeconds().observe(requireActivity(), integerObserver);
 
         return binding.getRoot();
     }
@@ -75,10 +85,19 @@ public class RoundWithTimerFragment extends Fragment {
         activity = (GameActivity) context;
     }
 
-    private void launchTimer() {
+    private void setAndLaunchNewTimer() {
+        model.setTimer(new CountDownTimer(game.getParameters().getTimerDuration() * 1000L, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                model.getRemainingSeconds().setValue((int) millisUntilFinished / 1000);
+            }
+
+            @Override
+            public void onFinish() {
+                model.isTimerFinished().setValue(true);
+            }
+        });
         model.setTimerLaunchedTrue();
-        progressBar.setMax(game.getParameters().getTimerDuration());
-        progressBar.setProgressCompat(progressBar.getMax(), false);
         model.getTimer().start();
     }
 
@@ -99,21 +118,5 @@ public class RoundWithTimerFragment extends Fragment {
     private void setTextLetter() {
         binding.textAboveLetter.setText(R.string.text_round_letter_is);
         binding.roundLetter.setText(Character.toString(game.getCurrentRound().getLetter()));
-    }
-
-    private void setNewTimer() {
-        model.setTimer(new CountDownTimer(game.getParameters().getTimerDuration() * 1000L, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                progressBar.setProgressCompat((int) millisUntilFinished / 1000, true);
-            }
-
-            @Override
-            public void onFinish() {
-                model.setTimerFinishedTrue();
-                setTextTimerFinished();
-                fab.show();
-            }
-        });
     }
 }
