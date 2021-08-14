@@ -91,7 +91,7 @@ public class PaysVilleGame {
         /**
          * @return la durée du timer en secondes pour cette manche, ou 0 s'il est désactivé
          */
-        public int getTimer() {
+        public int getTimerDuration() {
             if (!parameters.isTimerOn())
                 return 0;
             else {
