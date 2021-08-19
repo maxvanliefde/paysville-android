@@ -6,6 +6,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import android.widget.TextView
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import be.thefluffypangolin.paysville.R
 import be.thefluffypangolin.paysville.databinding.FragmentMainAboutBinding
@@ -18,8 +21,8 @@ class AboutFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentMainAboutBinding.inflate(inflater, container, false)
-        binding.textAbout.setText(R.string.title_about)
-        return binding.root
+        return ComposeView(requireContext()).apply {
+            setContent { Text(getString(R.string.title_about)) }
+        }
     }
 }
