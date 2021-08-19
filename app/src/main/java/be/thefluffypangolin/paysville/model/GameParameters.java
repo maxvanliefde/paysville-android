@@ -26,12 +26,6 @@ public class GameParameters implements Parcelable {
 
     /* Exceptions */
 
-    public static class BadParameterException extends Exception {
-        public BadParameterException(String param) {
-            super("Le paramètre suivant n'est pas sur true :" + param);
-        }
-    }
-
     public static class GameNotReadyException extends Exception {
         private final Set<String> reasons;
         public GameNotReadyException(Set<String> reasons) {
@@ -88,8 +82,7 @@ public class GameParameters implements Parcelable {
         return pointsGameEnd;
     }
 
-    public void setPointsGameEnd(int pointsGameEnd) throws BadParameterException {
-        if (!doGameEndsWithPoints()) throw new BadParameterException("pointsGameEnd");
+    public void setPointsGameEnd(int pointsGameEnd) {
         this.pointsGameEnd = pointsGameEnd;
     }
 
@@ -106,8 +99,7 @@ public class GameParameters implements Parcelable {
         return timerDuration;
     }
 
-    public void setTimerDuration(int timerDuration) throws BadParameterException {
-        if (!timerOn) throw new BadParameterException("timerOn");
+    public void setTimerDuration(int timerDuration) {
         this.timerDuration = timerDuration;
     }
 
@@ -124,8 +116,7 @@ public class GameParameters implements Parcelable {
         return bonusTimerDuration;
     }
 
-    public void setBonusTimerDuration(int bonusTimerDuration) throws BadParameterException {
-        if (!isBonusTimerOn()) throw new BadParameterException("bonusTimerOn");
+    public void setBonusTimerDuration(int bonusTimerDuration) {
         this.bonusTimerDuration = bonusTimerDuration;
     }
 
@@ -150,8 +141,7 @@ public class GameParameters implements Parcelable {
         return probabilityPercentage;
     }
 
-    public void setProbabilityPercentage(int probabilityPercentage) throws BadParameterException {
-        if (!isRandomDoublePointsOn()) throw new BadParameterException("timerOn");
+    public void setProbabilityPercentage(int probabilityPercentage) {
         this.probabilityPercentage = probabilityPercentage;
     }
 
