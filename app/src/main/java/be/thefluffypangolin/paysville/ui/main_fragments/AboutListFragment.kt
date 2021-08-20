@@ -5,12 +5,15 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import be.thefluffypangolin.paysville.BuildConfig
 import be.thefluffypangolin.paysville.R
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 
 class AboutListFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.about, rootKey)
+
+        findPreference<Preference>("app_version")?.summary = BuildConfig.VERSION_NAME
 
         val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
             data = Uri.parse("mailto:")

@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <Preference
-        android:key="app_info"
-        android:title="@string/app_name"
-        app:selectable="false" />
+        android:key="app_version"
+        android:title="@string/app_version_title"
+        app:selectable="true" />
 
     <Preference
         android:summary="@string/not_yet_available"

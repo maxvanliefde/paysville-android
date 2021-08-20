@@ -15,7 +15,6 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -26,13 +25,10 @@ android {
     buildTypes {
         debug {
             versionNameSuffix ".debug"
-            resValue "string", "app_version",
-                    "${defaultConfig.versionName}${versionNameSuffix}"
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            resValue "string", "app_version", "${defaultConfig.versionName}"
         }
     }
     compileOptions {

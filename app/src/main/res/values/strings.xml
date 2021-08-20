@@ -1,6 +1,8 @@
 <resources>
     <!-- Global -->
     <string name="app_name">Pays-Ville</string>
+    <string name="app_logo">Logo</string>
+    <string name="app_version_title">Version</string>
     <string name="next">Suivant</string>
     <string name="cancel">Annuler</string>
     <string name="leave">Quitter</string>
@@ -10,6 +12,7 @@
     <string name="help">Aide</string>
     <string name="email_adress">maxvanliefde@protonmail.com</string>
     <string name="github_url">https://github.com/maxvanliefde/paysville-android</string>
+    <string name="developer" translatable="false">Max Vanliefde</string>
 
     <!-- Main Activity -->
     <string name="title_home_bottom">Jouer</string>
