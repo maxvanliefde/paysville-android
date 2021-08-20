@@ -9,7 +9,7 @@
         android:id="@+id/navigation_home"
         android:name="be.thefluffypangolin.paysville.ui.main_fragments.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_main_home" >
+        tools:layout="@layout/fragment_main_home">
         <action
             android:id="@+id/action_home_to_launchDialog"
             app:destination="@id/launchGameDialogFragment" />
@@ -18,8 +18,7 @@
     <fragment
         android:id="@+id/navigation_settings"
         android:name="be.thefluffypangolin.paysville.ui.main_fragments.SettingsFragment"
-        android:label="@string/title_settings"
-        tools:layout="@layout/fragment_main_settings" />
+        android:label="@string/title_settings" />
 
     <fragment
         android:id="@+id/navigation_about"
