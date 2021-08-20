@@ -6,6 +6,10 @@
     <string name="leave">Quitter</string>
     <string name="ok">OK</string>
     <string name="modify">Modifier</string>
+    <string name="not_yet_available">Pas encore disponible</string>
+    <string name="help">Aide</string>
+    <string name="email_adress">maxvanliefde@protonmail.com</string>
+    <string name="github_url">https://github.com/maxvanliefde/paysville-android</string>
 
     <!-- Main Activity -->
     <string name="title_home_bottom">Jouer</string>
@@ -13,7 +17,7 @@
     <string name="title_settings_bottom">Paramètres</string>
     <string name="title_settings">Paramètres du jeu</string>
     <string name="title_about_bottom">À propos</string>
-    <string name="title_about">À propos de cette application</string>
+    <string name="title_about" translatable="false">À propos de cette application</string>
     <string name="launch_game_text">Lancer le jeu</string>
     
     <string name="text_home_fragment">Que diriez-vous d\'une petite partie ?</string>
@@ -51,4 +55,13 @@
 
     <string name="leave_game_title">Vous vous apprêtez à quitter la partie !</string>
     <string name="leave_game_msg">Souhaitez-vous continuer ? Vous perdrez la partie en cours.</string>
+    
+    <!-- About page -->
+    <string name="rate">Noter l\'application</string>
+    <string name="contact">Contacter</string>
+    <string name="github" translatable="false">GitHub</string>
+    <string name="source_code">Code source de l\'application</string>
+    <string name="thanks">Remerciements</string>
+    <string name="open_source_libraires">Librairies open source</string>
+    <string name="open_source_libraires_summary">Utilisées pour créer l\'application</string>
 </resources>

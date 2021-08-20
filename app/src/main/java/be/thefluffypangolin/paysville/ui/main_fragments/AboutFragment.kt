@@ -21,8 +21,7 @@ class AboutFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return ComposeView(requireContext()).apply {
-            setContent { Text(getString(R.string.title_about)) }
-        }
+        binding = FragmentMainAboutBinding.inflate(inflater, container, false)
+        return binding.root
     }
 }
