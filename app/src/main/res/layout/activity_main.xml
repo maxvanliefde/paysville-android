@@ -5,11 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include
+        android:id="@+id/toolbar_layout_main"
+        layout="@layout/layout_toolbar" />
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment_activity_main"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
         android:layout_marginBottom="@dimen/bottom_nav_bar_height"
         app:defaultNavHost="true"
         app:navGraph="@navigation/main_navigation" />

@@ -30,6 +30,9 @@ public class GameActivity extends AppCompatActivity implements HasDefaultViewMod
         model = new ViewModelProvider(this).get(GameViewModel.class);
         fab = binding.fabGame;
         setContentView(binding.getRoot());
+        setSupportActionBar(binding.toolbarLayoutGame.toolbar);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_24);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // arguments
         Intent intent = getIntent();
@@ -42,12 +45,7 @@ public class GameActivity extends AppCompatActivity implements HasDefaultViewMod
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(activity);
-                builder.setTitle(R.string.leave_game_title)
-                        .setMessage(R.string.leave_game_msg)
-                        .setPositiveButton(R.string.leave, (dialog, which) -> activity.finish())
-                        .setNegativeButton(R.string.cancel, (dialog, which) -> dialog.dismiss());
-                builder.create().show();
+                displayExitMessage();
             }
         });
 
@@ -61,5 +59,20 @@ public class GameActivity extends AppCompatActivity implements HasDefaultViewMod
 
     public CoordinatorLayout getCoordinatorLayout() {
         return binding.coordinatorLayoutGameActivity;
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        displayExitMessage();
+        return false;
+    }
+
+    private void displayExitMessage() {
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
+        builder.setTitle(R.string.leave_game_title)
+                .setMessage(R.string.leave_game_msg)
+                .setPositiveButton(R.string.leave, (dialog, which) -> this.finish())
+                .setNegativeButton(R.string.cancel, (dialog, which) -> dialog.dismiss());
+        builder.create().show();
     }
 }

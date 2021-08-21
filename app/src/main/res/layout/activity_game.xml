@@ -7,11 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".GameActivity">
 
+    <include
+        layout="@layout/layout_toolbar"
+        android:id="@+id/toolbar_layout_game" />
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment_activity_game"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
         app:navGraph="@navigation/game_navigation" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton

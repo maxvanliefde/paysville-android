@@ -4,16 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PlayersChoiceActivity"
-    >
+    tools:context=".PlayersChoiceActivity">
+
+    <include
+        android:id="@+id/toolbar_layout_players"
+        layout="@layout/layout_toolbar" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment_activity_players_choice"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/players_choice_navigation"
-        />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_layout_players"
+        app:navGraph="@navigation/players_choice_navigation" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

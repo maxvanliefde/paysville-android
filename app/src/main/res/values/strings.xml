@@ -32,6 +32,7 @@
     <string name="modify_settings">Modifier les paramètres</string>
 
     <!-- Players Choice Activity -->
+    <string name="players_choice_activity_title">Sélection des joueurs</string>
     <string name="text_players_number">Combien de joueurs êtes-vous ?</string>
     <string name="text_players_names">Bienvenue à vous %1$d ! \nComment vous appelez-vous ?</string>
     <string name="text_players_done">C\'est bien noté,\n %1$s !\nOn va pouvoir commencer à jouer !</string>

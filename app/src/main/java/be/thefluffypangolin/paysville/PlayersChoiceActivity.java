@@ -4,6 +4,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,8 +32,10 @@ public class PlayersChoiceActivity extends AppCompatActivity
         binding = ActivityPlayersChoiceBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) actionBar.setTitle("Sélection des joueurs");
+        Toolbar toolbar = binding.toolbarLayoutPlayers.toolbar;
+        toolbar.setTitle(R.string.players_choice_activity_title);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Récupérer les paramètres
         Intent intent = getIntent();
