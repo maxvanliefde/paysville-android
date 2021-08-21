@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.game_fragments.RoundNoTimerFragment"
-    android:layout_margin="@dimen/activity_horizontal_margin">
+    android:layout_margin="@dimen/activity_horizontal_margin"
+    tools:context=".ui.game_fragments.RoundNoTimerFragment">
 
     <TextView
         android:layout_width="wrap_content"
@@ -20,6 +20,7 @@
         android:id="@+id/round_letter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="?android:textColorPrimary"
         android:textSize="150sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

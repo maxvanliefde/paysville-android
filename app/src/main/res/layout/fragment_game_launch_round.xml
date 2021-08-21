@@ -18,6 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/text_round_number"
+        android:textColor="?android:textColorPrimary"
         android:textSize="50sp" />
 
     <TextView

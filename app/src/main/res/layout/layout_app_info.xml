@@ -16,12 +16,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="@string/app_name"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:textColor="?android:textColorPrimary"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="@string/developer" />
+        android:text="@string/developer"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

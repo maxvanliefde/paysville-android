@@ -37,7 +37,7 @@
     <!-- Game Activity -->
     <string name="round">Manche</string>
     <string name="text_round_number">#%1$d</string>
-    <string name="text_round_ready">Êtes-vous prêt.e.s ?</string>
+    <string name="text_round_ready">Tout le monde est prêt ?</string>
     <string name="play_round">Jouer</string>
     <string name="text_round_letter_is">La lettre de la manche est</string>
     <string name="text_round_times_up">Le compte à rebours est terminé !</string>

@@ -1,6 +1,7 @@
 package be.thefluffypangolin.paysville.ui.game_fragments;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.LinearLayoutCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -47,11 +49,17 @@ public class WinnersFragment extends Fragment {
         else
             textView.setText(R.string.winners_are);
 
+        Resources.Theme theme = requireContext().getTheme();
+        TypedValue outValue = new TypedValue();
+        theme.resolveAttribute(android.R.attr.textColorPrimary, outValue, true);
+        int colorPrimary = ContextCompat.getColor(requireContext(), outValue.resourceId);
+
         for (Player p : winners) {
             TextView textViewName = new TextView(winnersLayout.getContext());
             textViewName.setText(p.getName());
             textViewName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
             textViewName.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            textViewName.setTextColor(colorPrimary);
             winnersLayout.addView(textViewName);
         }
 
