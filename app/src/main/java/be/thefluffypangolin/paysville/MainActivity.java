@@ -58,8 +58,9 @@ public class MainActivity extends AppCompatActivity implements LaunchGameDialogF
 
     @Override
     public void onDialogModifyClick(DialogFragment dialog) {
-        // redirige vers l'écran Paramètres et affiche un petit message
-        Snackbar.make(binding.container, "Retournez sur l'onglet Jouer dès que vous aurez choisi vos paramètres", BaseTransientBottomBar.LENGTH_LONG)
+        // redirige vers l'écran paramètres car l'utilisateur l'a voulu
+        Snackbar.make(binding.container, getString(R.string.return_when_ready), BaseTransientBottomBar.LENGTH_LONG)
+                .setAnchorView(binding.navView)
                 .show();
         binding.navView.setSelectedItemId(R.id.navigation_settings);
     }
@@ -69,18 +70,19 @@ public class MainActivity extends AppCompatActivity implements LaunchGameDialogF
         // redirige vers l'écran Paramètres car un ou plusieurs paramètres sont incorrects
         dialog.dismiss();
         Set<String> reasons = e.getReasons();
+        CharSequence text;
         if (reasons == null) {
-            Snackbar.make(binding.container, "Vérifiez les paramètres de jeu", BaseTransientBottomBar.LENGTH_LONG).show();
+            text = getString(R.string.verify_game_parameters);
         } else {
-            StringBuilder message = new StringBuilder("Vérifiez les paramètres de jeu : ");
+            StringBuilder message = new StringBuilder(getString(R.string.verify_game_parameters)).append(" : ");
             for (String reason : reasons) {
                 message.append(reason).append(", ");
             }
-            Snackbar.make(binding.container,
-                        message.delete(message.length()-2, message.length()-1).toString(),
-                        BaseTransientBottomBar.LENGTH_LONG)
-                    .show();
+            text = message.delete(message.length()-2, message.length()-1).toString();
         }
         binding.navView.setSelectedItemId(R.id.navigation_settings);
+        Snackbar.make(binding.container, text, BaseTransientBottomBar.LENGTH_LONG)
+                .setAnchorView(binding.navView)
+                .show();
     }
 }
