@@ -25,7 +25,6 @@ public class PaysVilleGame {
      * @param parameters les paramètres voulus pour le jeu
      * @param numberOfPlayers le nombre de joueurs
      * @param players la liste des joueurs
-     *                (voir aussi {@link GameParameters#generatePlayersList(String[])}
      */
     public PaysVilleGame(GameParameters parameters, int numberOfPlayers, Player[] players) {
         this.parameters = parameters;
