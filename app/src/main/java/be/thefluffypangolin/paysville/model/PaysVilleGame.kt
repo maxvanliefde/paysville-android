@@ -16,16 +16,16 @@ class PaysVilleGame(
 ) {
     private val factory = PaysVilleRoundFactory()
     private val rounds = ArrayList<PaysVilleRound>()
-    val currentPoints: MutableMap<Player, Int> = HashMap(numberOfPlayers + 1, 1F)
+    private val currentPoints: MutableMap<Player, Int> = HashMap(numberOfPlayers + 1, 1F)
+
+    init {
+        for (p in players) currentPoints[p] = 0
+    }
 
     val currentRound: PaysVilleRound
         get() = rounds[rounds.size - 1]
     val currentRoundNumber: Int
         get() = rounds.size
-
-    init {
-        for (p in players) currentPoints[p] = 0
-    }
 
     /**
      * Exception lancée lorsqu'une nouvelle manche veut être créée,
@@ -49,8 +49,9 @@ class PaysVilleGame(
                 else {
                     val time = parameters.timerDuration
                     if (parameters.isBonusTimerOn
-                        && parameters.bonusTimerLetters!!.contains(letter.toString()))
-                            time + parameters.bonusTimerDuration
+                        && parameters.bonusTimerLetters!!.contains(letter.toString())
+                    )
+                        time + parameters.bonusTimerDuration
                     else time
                 }
 
@@ -134,7 +135,6 @@ class PaysVilleGame(
 
     /**
      * Vérifie si la partie est finie, en fonction des paramètres du jeu.
-     * @return vrai si le jeu est terminé, ou faux sinon
      */
     val isGameFinished: Boolean
         get() {
