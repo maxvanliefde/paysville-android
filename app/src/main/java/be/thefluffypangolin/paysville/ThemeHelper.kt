@@ -19,7 +19,8 @@ object ThemeHelper {
     fun modifyTheme(context: Context, theme: String, toggle: MenuItem) {
         applyTheme(theme, toggle)
         val sharedPreferences = context.getSharedPreferences(
-            SHARED_PREF_KEY, Context.MODE_PRIVATE)
+            SHARED_PREF_KEY, Context.MODE_PRIVATE
+        )
         with(sharedPreferences.edit()) {
             putString(PREF_THEME_KEY, theme)
             apply()
@@ -32,17 +33,20 @@ object ThemeHelper {
     @JvmStatic
     fun loadTheme(context: Context, toggle: MenuItem) {
         val sharedPreferences = context.getSharedPreferences(
-            SHARED_PREF_KEY, Context.MODE_PRIVATE)
+            SHARED_PREF_KEY, Context.MODE_PRIVATE
+        )
         val theme = sharedPreferences.getString(PREF_THEME_KEY, DEFAULT_THEME)!!
         applyTheme(theme, toggle)
     }
 
     /**
-     * Applique le thème donné, sans modifier la valeur en mémoire
+     * Applique le thème donné, sans modifier la valeur en mémoire,
+     * et modifie l'icône de l'item donné
      */
     @JvmStatic
     private fun applyTheme(theme: String, toggle: MenuItem) {
-        val nightMode: Int; val icon: Int
+        val nightMode: Int
+        val icon: Int
         when (theme) {
             LIGHT_THEME -> {
                 nightMode = AppCompatDelegate.MODE_NIGHT_NO
@@ -52,7 +56,7 @@ object ThemeHelper {
                 nightMode = AppCompatDelegate.MODE_NIGHT_YES
                 icon = R.drawable.ic_theme_dark_24
             }
-            else ->{
+            else -> {
                 nightMode = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
                 } else {
