@@ -22,11 +22,7 @@ public class GameViewModel extends ViewModel {
     public void init(GameParameters parameters, int number, String[] names) {
         if (game == null) {
             game = new PaysVilleGame(parameters, number, generatePlayersList(names));
-            try {
-                game.addNewRound();
-            } catch (PaysVilleGame.NoLetterLeftException e) {
-                e.printStackTrace();
-            }
+            game.addNewRound();
         }
     }
 

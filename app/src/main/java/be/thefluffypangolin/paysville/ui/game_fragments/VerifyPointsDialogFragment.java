@@ -64,11 +64,7 @@ public class VerifyPointsDialogFragment extends DialogFragment {
                 if (game.isGameFinished()) {
                     action = VerifyPointsDialogFragmentDirections.actionVerifyToFinished();
                 } else {
-                    try {
-                        game.addNewRound();
-                    } catch (PaysVilleGame.NoLetterLeftException e) {
-                        e.printStackTrace();
-                    }
+                    game.addNewRound();
                     action = VerifyPointsDialogFragmentDirections.actionVerifyToLaunch();
                 }
                 Navigation.findNavController(activity, R.id.nav_host_fragment_activity_game).navigate(action);

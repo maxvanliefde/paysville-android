@@ -1,184 +1,101 @@
-package be.thefluffypangolin.paysville.model;
+package be.thefluffypangolin.paysville.model
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.lang.Exception
+import java.lang.IndexOutOfBoundsException
+import java.lang.StringBuilder
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Cette classe représente une partie de Pays-Ville.
  */
-public class PaysVilleGame {
-    private final GameParameters parameters;
-    private final int numberOfPlayers;
-    private final Player[] players;
-    private final PaysVilleRoundFactory factory;
-    private final List<PaysVilleRound> rounds;
-    private final Map<Player, Integer> currentPoints;
+class PaysVilleGame(
+    val parameters: GameParameters,
+    val numberOfPlayers: Int,
+    val players: Array<Player>
+) {
+    private val factory = PaysVilleRoundFactory()
+    private val rounds = ArrayList<PaysVilleRound>()
+    val currentPoints: MutableMap<Player, Int> = HashMap(numberOfPlayers + 1, 1F)
 
-    /**
-     * Crée une nouvelle partie de Pays-Ville.
-     * Les paramètres, le nombre de joueurs et la liste des joueurs sont donnés.
-     * @param parameters les paramètres voulus pour le jeu
-     * @param numberOfPlayers le nombre de joueurs
-     * @param players la liste des joueurs
-     */
-    public PaysVilleGame(GameParameters parameters, int numberOfPlayers, Player[] players) {
-        this.parameters = parameters;
-        this.numberOfPlayers = numberOfPlayers;
-        this.players = players;
+    val currentRound: PaysVilleRound
+        get() = rounds[rounds.size - 1]
+    val currentRoundNumber: Int
+        get() = rounds.size
 
-        this.factory = new PaysVilleRoundFactory();
-        this.rounds = new ArrayList<>();
-        this.currentPoints = new HashMap<>(numberOfPlayers + 1, 1);
-        for (Player p : this.players) this.currentPoints.put(p, 0);
+    init {
+        for (p in players) currentPoints[p] = 0
     }
 
     /**
      * Exception lancée lorsqu'une nouvelle manche veut être créée,
      * mais que toutes les lettres de l'alphabet ont déjà été générées
      */
-    public static class NoLetterLeftException extends Exception {
-        public NoLetterLeftException() {
-            super("Toutes les lettres ont déjà été générées");
-        }
-    }
+    class NoLetterLeftException :
+        Exception("Toutes les lettres ont déjà été générées")
 
     /**
      * Cette classe représente une manche d'une partie.
      */
-    public class PaysVilleRound {
-        private final char letter;
-        private final Map<Player, Integer> points;
-
-        /**
-         * Initialise une manche avec la lettre donnée
-         */
-        public PaysVilleRound(char letter) {
-            this.letter = letter;
-            this.points = new HashMap<>(numberOfPlayers+1, 1);
-        }
-
-        /**
-         * @return la lettre de la manche
-         */
-        public char getLetter() {
-            return letter;
-        }
-
-        /**
-         * Met à jour le score obtenu par un joueur
-         * @param player un joueur
-         * @param score son score
-         * @return le score précédent associé au joueur, ou null s'il n'en avait pas encore
-         */
-        public Integer setScore(Player player, int score) {
-            return this.points.put(player, score);
-        }
-
-        /**
-         * @param player un joueur
-         * @return le score obtenu par le joueur, ou null s'il n'a pas de score associé
-         */
-        public Integer getScore(Player player) {
-            return this.points.get(player);
-        }
+    inner class PaysVilleRound(val letter: Char) {
+        private val points = HashMap<Player, Int>(numberOfPlayers + 1, 1F)
 
         /**
          * @return la durée du timer en secondes pour cette manche, ou 0 s'il est désactivé
          */
-        public int getTimerDuration() {
-            if (!parameters.isTimerOn())
-                return 0;
-            else {
-                int time = parameters.getTimerDuration();
-                if (parameters.isBonusTimerOn()
-                        && parameters.getBonusTimerLetters().contains(Character.toString(letter)))
-                    return time + parameters.getBonusTimerDuration();
-                else
-                    return time;
-            }
+        val timerDuration: Int
+            get() =
+                if (!parameters.isTimerOn) 0
+                else {
+                    val time = parameters.timerDuration
+                    if (parameters.isBonusTimerOn
+                        && parameters.bonusTimerLetters!!.contains(letter.toString()))
+                            time + parameters.bonusTimerDuration
+                    else time
+                }
+
+        /**
+         * Met à jour le score obtenu par un joueur
+         */
+        fun setScore(player: Player, score: Int) {
+            points[player] = score
+        }
+
+        /**
+         * @return le score obtenu par le joueur, ou null s'il n'a pas de score associé
+         */
+        fun getScore(player: Player): Int? {
+            return points[player]
         }
 
         /**
          * Double les points encodés de chaque joueur.
          */
-        public void doubleScores() {
-            for (int i = 0; i < numberOfPlayers; i++)
-                setScore(players[i], 2*getScore(players[i]));
+        fun doubleScores() {
+            for (i in 0 until numberOfPlayers)
+                setScore(players[i], 2 * getScore(players[i])!!)
         }
     }
 
     /**
      * Génère des manches comprenant une lettre aléatoire chacune.
      */
-    public class PaysVilleRoundFactory {
-        private final List<Character> letters;
-        private int currentIndex;
-
-        /**
-         * Crée une nouvelle Factory, avec un alphabet en ordre aléatoire
-         */
-        public PaysVilleRoundFactory() {
-            letters = IntStream.rangeClosed('A', 'Z')
-                    .mapToObj(c -> (char) c)
-                    .collect(Collectors.toList());
-            Collections.shuffle(letters);
-            currentIndex = 0;
-        }
+    inner class PaysVilleRoundFactory {
+        private val letters: List<Char> = ('A'..'Z').toMutableList().apply { shuffle() }
+        private var currentIndex: Int = 0
 
         /**
          * Crée une nouvelle manche
          * @return une nouvelle manche avec une lettre aléatoire associée,
          * choisie parmi celles restantes
-         * @throws NoLetterLeftException si toutes les lettres ont déjà été générées précédemment
          */
-        public PaysVilleRound newRound() throws NoLetterLeftException {
+        fun newRound(): PaysVilleRound {
             try {
-                return new PaysVilleRound(letters.get(currentIndex++));
-            } catch (IndexOutOfBoundsException e) {
-                throw new NoLetterLeftException();
+                return PaysVilleRound(letters[currentIndex++])
+            } catch (e: IndexOutOfBoundsException) {
+                throw NoLetterLeftException()
             }
         }
-    }
-
-    /**
-     * @return les paramètres de la partie
-     */
-    public GameParameters getParameters() {
-        return parameters;
-    }
-
-    /**
-     * @return la liste des manches de la partie
-     */
-    public List<PaysVilleRound> getRounds() {
-        return rounds;
-    }
-
-    public int getNumberOfPlayers() {
-        return numberOfPlayers;
-    }
-
-    public Player[] getPlayers() {
-        return players;
-    }
-
-    /**
-     * @return les points actuels, sous la forme d'un mappage entre un joueur et ses points
-     */
-    public Map<Player, Integer> getCurrentPoints() {
-        return currentPoints;
-    }
-
-    /**
-     * @return la manche actuelle, i.e. la dernière de la liste rounds
-     */
-    public PaysVilleRound getCurrentRound() {
-        return rounds.get(rounds.size() - 1);
     }
 
     /**
@@ -186,52 +103,32 @@ public class PaysVilleGame {
      * @return la lettre de la nouvelle manche
      * @throws NoLetterLeftException si plus aucune lettre de l'alphabet n'est disponible
      */
-    public char addNewRound() throws NoLetterLeftException {
-        PaysVilleRound round = factory.newRound();
-        rounds.add(round);
-        return round.getLetter();
-    }
-
-    /**
-     * Retourne le numéro de la manche actuelle, i.e. la dernière ajoutée avec {@link #addNewRound()},
-     * ce qui correspond à la longueur de la liste rounds.
-     * @return le numéro de la dernière manche ajoutée
-     */
-    public int getCurrentRoundNumber() {
-        return rounds.size();
-    }
-
-    /**
-     * Ajoute le score d'un joueur à la manche actuelle,
-     * sans mettre à jour les points totaux de la partie.
-     * @param player un joueur
-     * @param score son score à la manche actuelle
-     */
-    public void addScoreToCurrentRound(Player player, int score) {
-        getCurrentRound().setScore(player, score);
+    fun addNewRound(): Char {
+        val round = factory.newRound()
+        rounds.add(round)
+        return round.letter
     }
 
     /**
      * Ajoute les scores de chaque joueur à la manche actuelle,
      * sans mettre à jour les points totaux de la partie.
-     * Le joueur correspondant à scores[i] doit être players[i].
-     * @param scores les scores obtenus par les joueurs {@link #players} à la manche actuelle
+     * Le joueur correspondant à scores\[i] doit être players\[i].
+     * @param scores les scores obtenus par les joueurs [.players] à la manche actuelle
      */
-    public void addAllScoresToCurrentRound(int[] scores) {
-        for (int i = 0; i < numberOfPlayers; i++) {
-            addScoreToCurrentRound(players[i], scores[i]);
+    fun addAllScoresToCurrentRound(scores: IntArray) {
+        for (i in 0 until numberOfPlayers) {
+            currentRound.setScore(players[i], scores[i])
         }
     }
 
     /**
      * Met à jour les points totaux de la partie en rajoutant ceux de la manche actuelle.
      */
-    public void updateCurrentPoints() {
-        for (int i = 0; i < numberOfPlayers; i++) {
-            Integer currentPoints = getCurrentPoints().get(players[i]);
-            Integer newScore = getCurrentRound().getScore(players[i]);
-            if (currentPoints != null && newScore != null)
-                getCurrentPoints().put(players[i], currentPoints + newScore);
+    fun updateCurrentPoints() {
+        for (i in 0 until numberOfPlayers) {
+            val currentScore = currentPoints[players[i]]!!
+            val newScore = currentRound.getScore(players[i])!!
+            currentPoints[players[i]] = currentScore + newScore
         }
     }
 
@@ -239,56 +136,56 @@ public class PaysVilleGame {
      * Vérifie si la partie est finie, en fonction des paramètres du jeu.
      * @return vrai si le jeu est terminé, ou faux sinon
      */
-    public boolean isGameFinished() {
-        if (getCurrentRoundNumber() == 26) return true;
-        else if (parameters.doGameEndsWithPoints()) {
-            for (Player p : players) {
-                Integer points = getCurrentPoints().get(p);
-                if (points != null && points >= parameters.getPointsGameEnd()) {
-                    return true;
+    val isGameFinished: Boolean
+        get() {
+            if (currentRoundNumber == 26) return true
+            else if (parameters.gameEndsWithPoints) {
+                for (p in players) {
+                    val points = currentPoints[p]!!
+                    if (points >= parameters.pointsGameEnd)
+                        return true
                 }
-            }
-            return false;
+                return false
+            } else return false
         }
-        else return false;
-    }
+
 
     /**
      * Récupère le ou les gagnant.e.s de la partie
      * @return null si la partie n'est pas terminée,
-     *      ou une liste contenant le ou les gagnant.e.s de la partie sinon
+     * ou une liste contenant le ou les gagnant.e.s de la partie sinon
      */
-    public List<Player> getWinners() {
-        if (!isGameFinished())
-            return null;
-        else {
-            int max = 0;
-            List<Player> winners = new ArrayList<>();
-            for (int i = 0; i < numberOfPlayers; i++) {
-                Integer score = getCurrentPoints().get(players[i]);
-                if (score != null && score > max) {
-                    max = score;
-                    winners.clear();
-                    winners.add(players[i]);
-                } else if (score != null && score == max) {
-                    winners.add(players[i]);
+    val winners: List<Player>?
+        get() =
+            if (!isGameFinished) null
+            else {
+                var max = 0
+                val winners = ArrayList<Player>()
+                for (i in 0 until numberOfPlayers) {
+                    val score = currentPoints[players[i]]!!
+                    if (score > max) {
+                        max = score
+                        winners.clear()
+                        winners.add(players[i])
+                    } else if (score == max) {
+                        winners.add(players[i])
+                    }
                 }
+                winners
             }
-            return winners;
-        }
-    }
 
-    public String getPointsEvolution() {
-        StringBuilder s = new StringBuilder();
-        for (int i = 0; i < numberOfPlayers; i++) {
-            Player player = players[i];
-            int actualScore = getCurrentPoints().get(player);
-            int newScore = getCurrentRound().getScore(player);
-            s.append(player.getName()).append(" :\t")
+    val pointsEvolution: String
+        get() {
+            val s = StringBuilder()
+            for (i in 0 until numberOfPlayers) {
+                val player = players[i]
+                val actualScore = currentPoints[player]!!
+                val newScore = currentRound.getScore(player)!!
+                s.append(player.name).append(" :\t")
                     .append(actualScore).append(" + ").append(newScore)
                     .append(" => ").append(actualScore + newScore)
-                    .append("\n");
+                    .append("\n")
+            }
+            return s.toString()
         }
-        return s.toString();
-    }
 }
