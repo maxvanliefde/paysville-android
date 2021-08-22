@@ -2,11 +2,14 @@ package be.thefluffypangolin.paysville;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.navigation.NavController;
@@ -23,6 +26,7 @@ import be.thefluffypangolin.paysville.ui.main_fragments.LaunchGameDialogFragment
 public class MainActivity extends AppCompatActivity implements LaunchGameDialogFragment.LaunchGameDialogListener {
 
     private ActivityMainBinding binding;
+    private MenuItem toggleThemeItem;
 
     public static final String KEY_GAME_PARAMETERS = "GAME_PARAMETERS_ARG";
 
@@ -47,6 +51,30 @@ public class MainActivity extends AppCompatActivity implements LaunchGameDialogF
             NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
             NavigationUI.setupWithNavController(binding.navView, navController);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        toggleThemeItem = menu.getItem(1);
+        ThemeHelper.loadTheme(this, toggleThemeItem);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.toolbar_action_dark_theme) {
+            ThemeHelper.modifyTheme(this, ThemeHelper.DARK_THEME, toggleThemeItem);
+            return true;
+        } else if (itemId == R.id.toolbar_action_light_theme) {
+            ThemeHelper.modifyTheme(this, ThemeHelper.LIGHT_THEME, toggleThemeItem);
+            return true;
+        } else if (itemId == R.id.toolbar_action_default_theme) {
+            ThemeHelper.modifyTheme(this, ThemeHelper.DEFAULT_THEME, toggleThemeItem);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

@@ -10,8 +10,12 @@
     <string name="modify">Modifier</string>
     <string name="not_yet_available">Pas encore disponible</string>
     <string name="help">Aide</string>
-    <string name="email_adress">maxvanliefde@protonmail.com</string>
-    <string name="github_url">https://github.com/maxvanliefde/paysville-android</string>
+    <string name="theme">Thème</string>
+    <string name="dark_theme">Thème sombre</string>
+    <string name="light_theme">Thème clair</string>
+    <string name="default_theme">Économiseur de batterie</string>
+    <string name="email_adress" translatable="false">maxvanliefde@protonmail.com</string>
+    <string name="github_url" translatable="false">https://github.com/maxvanliefde/paysville-android</string>
     <string name="developer" translatable="false">Max Vanliefde</string>
 
     <!-- Main Activity -->

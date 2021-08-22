@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/toolbar_action_help"
+        android:icon="@drawable/ic_help_outline_24"
+        android:title="@string/help"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/toolbar_action_theme"
+        android:title="@string/theme"
+        app:showAsAction="ifRoom">
+
+        <menu>
+            <item
+                android:id="@+id/toolbar_action_light_theme"
+                android:title="@string/light_theme" />
+            <item
+                android:id="@+id/toolbar_action_dark_theme"
+                android:title="@string/dark_theme" />
+            <item
+                android:id="@+id/toolbar_action_default_theme"
+                android:title="@string/default_theme" />
+        </menu>
+
+    </item>
+
+</menu>
