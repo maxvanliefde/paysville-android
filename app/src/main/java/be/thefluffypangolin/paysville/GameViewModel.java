@@ -1,6 +1,7 @@
 package be.thefluffypangolin.paysville;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -13,8 +14,13 @@ import be.thefluffypangolin.paysville.model.PaysVilleGame;
 import be.thefluffypangolin.paysville.model.Player;
 
 public class GameViewModel extends ViewModel {
-
+    private final SavedStateHandle state;
     private PaysVilleGame game;
+
+    public GameViewModel(SavedStateHandle savedStateHandle) {
+        state = savedStateHandle;
+        game = state.get("game");
+    }
 
     /**
      * Initialise le jeu (si nécessaire), et lance une première manche.
@@ -23,6 +29,7 @@ public class GameViewModel extends ViewModel {
         if (game == null) {
             game = new PaysVilleGame(parameters, number, generatePlayersList(names));
             game.addNewRound();
+            state.set("game", game);
         }
     }
 
