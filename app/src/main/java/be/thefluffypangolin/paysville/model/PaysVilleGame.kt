@@ -1,16 +1,17 @@
 package be.thefluffypangolin.paysville.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import java.lang.Exception
 import java.lang.IndexOutOfBoundsException
 import java.lang.StringBuilder
-import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 /**
  * Cette classe représente une partie de Pays-Ville.
  */
-
+@Parcelize
 class PaysVilleGame
 @JvmOverloads constructor(
     val parameters: GameParameters,
@@ -19,7 +20,7 @@ class PaysVilleGame
     private val factory: PaysVilleRoundFactory = PaysVilleRoundFactory(),
     private val rounds: ArrayList<PaysVilleRound> = ArrayList(),
     private val currentPoints: MutableMap<Player, Int> = HashMap(numberOfPlayers + 1, 1F)
-) {
+) : Parcelable {
 
     val currentRound: PaysVilleRound
         get() = rounds[rounds.size - 1]
@@ -138,10 +139,11 @@ class PaysVilleGame
 /**
  * Cette classe représente une manche d'une partie.
  */
+@Parcelize
 class PaysVilleRound(
     val letter: Char,
     private val points: MutableMap<Player, Int> = HashMap()
-) {
+) : Parcelable {
     /**
      * Met à jour le score obtenu par un joueur
      */
@@ -168,10 +170,11 @@ class PaysVilleRound(
 /**
  * Génère des manches comprenant une lettre aléatoire chacune.
  */
+@Parcelize
 class PaysVilleRoundFactory(
     private val letters: List<Char> = ('A'..'Z').toMutableList().apply { shuffle() }.toList(),
     private var currentIndex: Int = 0
-) {
+) : Parcelable {
     fun newRound(): PaysVilleRound {
         try {
             return PaysVilleRound(letters[currentIndex++])
