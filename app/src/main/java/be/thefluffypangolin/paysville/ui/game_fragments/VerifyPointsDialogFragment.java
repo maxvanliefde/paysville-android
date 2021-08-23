@@ -49,7 +49,7 @@ public class VerifyPointsDialogFragment extends DialogFragment {
             case DialogInterface.BUTTON_POSITIVE:
                 // paramètre compte double
                 if (game.getParameters().randomBoolean()) {
-                    game.getCurrentRound().doubleScores();
+                    game.getCurrentRound().doubleScores(game.getPlayers());
                     Snackbar.make(activity.getCoordinatorLayout(),
                             R.string.plot_twist_double_points,
                             BaseTransientBottomBar.LENGTH_LONG)

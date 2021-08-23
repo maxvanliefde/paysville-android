@@ -46,7 +46,7 @@ public class RoundWithTimerFragment extends Fragment {
         binding = FragmentGameRoundWithTimerBinding.inflate(inflater, container, false);
 
         // gestion du timer et de la ProgressBar
-        int timerDuration = game.getCurrentRound().getTimerDuration();
+        int timerDuration = game.getCurrentTimerDuration();
         progressBar = binding.progressBarTimer;
         progressBar.setMax(timerDuration);
         progressBar.setProgressCompat(progressBar.getMax(), false);

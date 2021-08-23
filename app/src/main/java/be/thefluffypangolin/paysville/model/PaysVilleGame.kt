@@ -5,27 +5,37 @@ import java.lang.IndexOutOfBoundsException
 import java.lang.StringBuilder
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 /**
  * Cette classe représente une partie de Pays-Ville.
  */
-class PaysVilleGame(
+
+class PaysVilleGame
+@JvmOverloads constructor(
     val parameters: GameParameters,
     val numberOfPlayers: Int,
-    val players: Array<Player>
-) {
-    private val factory = PaysVilleRoundFactory()
-    private val rounds = ArrayList<PaysVilleRound>()
+    val players: Array<Player>,
+    private val factory: PaysVilleRoundFactory = PaysVilleRoundFactory(),
+    private val rounds: ArrayList<PaysVilleRound> = ArrayList(),
     private val currentPoints: MutableMap<Player, Int> = HashMap(numberOfPlayers + 1, 1F)
-
-    init {
-        for (p in players) currentPoints[p] = 0
-    }
+) {
 
     val currentRound: PaysVilleRound
         get() = rounds[rounds.size - 1]
     val currentRoundNumber: Int
         get() = rounds.size
+    val currentTimerDuration: Int
+        get() =
+            if (!parameters.isTimerOn) 0
+            else {
+                val time = parameters.timerDuration
+                if (parameters.isBonusTimerOn
+                    && parameters.bonusTimerLetters!!.contains(currentRound.letter.toString())
+                )
+                    time + parameters.bonusTimerDuration
+                else time
+            }
 
     /**
      * Exception lancée lorsqu'une nouvelle manche veut être créée,
@@ -33,71 +43,6 @@ class PaysVilleGame(
      */
     class NoLetterLeftException :
         Exception("Toutes les lettres ont déjà été générées")
-
-    /**
-     * Cette classe représente une manche d'une partie.
-     */
-    inner class PaysVilleRound(val letter: Char) {
-        private val points = HashMap<Player, Int>(numberOfPlayers + 1, 1F)
-
-        /**
-         * @return la durée du timer en secondes pour cette manche, ou 0 s'il est désactivé
-         */
-        val timerDuration: Int
-            get() =
-                if (!parameters.isTimerOn) 0
-                else {
-                    val time = parameters.timerDuration
-                    if (parameters.isBonusTimerOn
-                        && parameters.bonusTimerLetters!!.contains(letter.toString())
-                    )
-                        time + parameters.bonusTimerDuration
-                    else time
-                }
-
-        /**
-         * Met à jour le score obtenu par un joueur
-         */
-        fun setScore(player: Player, score: Int) {
-            points[player] = score
-        }
-
-        /**
-         * @return le score obtenu par le joueur, ou null s'il n'a pas de score associé
-         */
-        fun getScore(player: Player): Int? {
-            return points[player]
-        }
-
-        /**
-         * Double les points encodés de chaque joueur.
-         */
-        fun doubleScores() {
-            for (i in 0 until numberOfPlayers)
-                setScore(players[i], 2 * getScore(players[i])!!)
-        }
-    }
-
-    /**
-     * Génère des manches comprenant une lettre aléatoire chacune.
-     */
-    inner class PaysVilleRoundFactory {
-        private val letters: List<Char> = ('A'..'Z').toMutableList().apply { shuffle() }
-        private var currentIndex: Int = 0
-
-        /**
-         * Crée une nouvelle manche
-         * @return une nouvelle manche avec une lettre aléatoire associée,
-         * choisie parmi celles restantes
-         */
-        fun newRound(): PaysVilleRound {
-            try {
-                return PaysVilleRound(letters[currentIndex++])
-            } catch (e: IndexOutOfBoundsException) {
-                throw NoLetterLeftException()
-            }
-        }
-    }
 
     /**
      * Ajoute une nouvelle manche à la liste des manches
@@ -127,7 +72,7 @@ class PaysVilleGame(
      */
     fun updateCurrentPoints() {
         for (i in 0 until numberOfPlayers) {
-            val currentScore = currentPoints[players[i]]!!
+            val currentScore = currentPoints[players[i]] ?: 0
             val newScore = currentRound.getScore(players[i])!!
             currentPoints[players[i]] = currentScore + newScore
         }
@@ -179,7 +124,7 @@ class PaysVilleGame(
             val s = StringBuilder()
             for (i in 0 until numberOfPlayers) {
                 val player = players[i]
-                val actualScore = currentPoints[player]!!
+                val actualScore = currentPoints[player] ?: 0
                 val newScore = currentRound.getScore(player)!!
                 s.append(player.name).append(" :\t")
                     .append(actualScore).append(" + ").append(newScore)
@@ -188,4 +133,50 @@ class PaysVilleGame(
             }
             return s.toString()
         }
+}
+
+/**
+ * Cette classe représente une manche d'une partie.
+ */
+class PaysVilleRound(
+    val letter: Char,
+    private val points: MutableMap<Player, Int> = HashMap()
+) {
+    /**
+     * Met à jour le score obtenu par un joueur
+     */
+    fun setScore(player: Player, score: Int) {
+        points[player] = score
+    }
+
+    /**
+     * @return le score obtenu par le joueur, ou null s'il n'a pas de score associé
+     */
+    fun getScore(player: Player): Int? {
+        return points[player]
+    }
+
+    /**
+     * Double les points encodés de chaque joueur.
+     */
+    fun doubleScores(players: Array<Player>) {
+        for (p in players)
+            setScore(p, 2 * getScore(p)!!)
+    }
+}
+
+/**
+ * Génère des manches comprenant une lettre aléatoire chacune.
+ */
+class PaysVilleRoundFactory(
+    private val letters: List<Char> = ('A'..'Z').toMutableList().apply { shuffle() }.toList(),
+    private var currentIndex: Int = 0
+) {
+    fun newRound(): PaysVilleRound {
+        try {
+            return PaysVilleRound(letters[currentIndex++])
+        } catch (e: IndexOutOfBoundsException) {
+            throw PaysVilleGame.NoLetterLeftException()
+        }
+    }
 }
